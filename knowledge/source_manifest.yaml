@@ -1,0 +1,11 @@
+# Source documents registered for curator review.
+
+sources:
+  - id: scaffold_readme
+    path: README.md
+    kind: scaffold_doc
+    status: active
+    summary: Overview of the agent-wiki scaffold.
+    added: TODO
+    last_reviewed: TODO
+

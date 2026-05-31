@@ -1,0 +1,26 @@
+# Machine-readable project graph.
+# Keep this compact and update it when project components, branches, or
+# evidence relationships change.
+
+project:
+  name: TODO
+  status: starter
+  summary: "Replace with the project summary."
+
+nodes:
+  - id: project_main
+    type: project
+    label: Main Project
+    status: active
+    wiki: wiki/topics/project_overview.md
+
+edges:
+  - from: project_main
+    to: active_plan
+    type: guided_by
+
+references:
+  - id: active_plan
+    type: plan
+    path: wiki/plans/active_plan.md
+

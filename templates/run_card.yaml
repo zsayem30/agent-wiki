@@ -1,0 +1,24 @@
+id: run_todo
+status: planned # planned | running | completed | failed | superseded | uninterpretable
+created: TODO
+updated: TODO
+owner: TODO
+summary: TODO
+command: TODO
+git_sha: TODO
+config:
+  seed: TODO
+  environment: TODO
+  key_parameters: {}
+outputs:
+  root: results/TODO
+  logs: []
+  artifacts: []
+metrics: {}
+interpretation:
+  status: provisional
+  summary: TODO
+related_claims: []
+related_reports: []
+notes: TODO
+

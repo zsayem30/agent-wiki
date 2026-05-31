@@ -1,0 +1,10 @@
+# Research ideas, variants, and branches.
+
+ideas:
+  - id: idea_main
+    status: placeholder
+    summary: Replace with the initial project idea.
+    source: null
+    parent: null
+    next_action: Add source idea or implementation plan.
+

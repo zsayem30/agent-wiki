@@ -1,0 +1,13 @@
+# Durable project claims.
+# Claims should be evidence-linked and status-aware.
+
+claims:
+  - id: claim_scaffold_separates_memory_surfaces
+    status: accepted
+    summary: The scaffold separates compact wiki truth, structured registries, raw sources, and generated results.
+    evidence:
+      - README.md
+      - AGENTS.md
+    last_checked: TODO
+    superseded_by: []
+

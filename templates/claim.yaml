@@ -1,0 +1,11 @@
+id: claim_todo
+status: proposed # proposed | accepted | verified | rejected | superseded
+summary: TODO
+evidence:
+  - TODO
+counterevidence: []
+last_checked: TODO
+owner: TODO
+superseded_by: []
+notes: TODO
+
