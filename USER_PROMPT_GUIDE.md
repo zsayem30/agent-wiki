@@ -11,6 +11,27 @@ Raw evidence goes in sources/ or results/. Compact truth goes in wiki/.
 Structured state goes in knowledge/.
 ```
 
+## OpenCode-First Startup
+
+Open the repository with OpenCode:
+
+```bash
+opencode
+```
+
+Then use the native commands defined in `opencode.json`:
+
+```text
+/context-implementer
+/context-curator
+/context-research
+/context-reporter
+```
+
+For serious work, run two OpenCode sessions: one in the `implementer` agent
+and one in the `wiki-curator` agent. Use `/wiki-scan` after durable work and
+`/wiki-lint` before handing off wiki changes.
+
 ## First Session In A New Project
 
 After cloning the scaffold, start with one implementer agent:

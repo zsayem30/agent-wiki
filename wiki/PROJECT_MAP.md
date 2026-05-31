@@ -38,6 +38,8 @@ agent-wiki/
 |   `-- workflows/
 |       `-- wiki-lint.yml
 |-- .opencode/
+|   |-- .gitignore
+|   |-- instructions.md
 |   `-- README.md
 |-- docs/
 |   `-- README.md
@@ -118,6 +120,7 @@ agent-wiki/
 |-- AGENTS.md
 |-- CLAUDE.md
 |-- Makefile
+|-- opencode.json
 |-- README.md
 `-- USER_PROMPT_GUIDE.md
 ```

@@ -1,0 +1,183 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "implementer",
+  "share": "manual",
+  "autoupdate": "notify",
+  "instructions": [
+    ".opencode/instructions.md"
+  ],
+  "permission": {
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+    "edit": "ask",
+    "bash": {
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "python scripts/wiki/lint.py*": "allow",
+      "python scripts/wiki/contextualize.py*": "allow",
+      "python scripts/wiki/build_tree.py*": "allow",
+      "python scripts/wiki/timestamp.py*": "allow"
+    },
+    "external_directory": "ask",
+    "webfetch": "allow",
+    "websearch": "allow",
+    "task": "allow"
+  },
+  "watcher": {
+    "ignore": [
+      ".git/**",
+      "node_modules/**",
+      "results/**",
+      "**/__pycache__/**",
+      ".pytest_cache/**",
+      ".mypy_cache/**",
+      ".ruff_cache/**",
+      ".venv/**",
+      "venv/**"
+    ]
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  },
+  "agent": {
+    "implementer": {
+      "description": "Implements, debugs, tests, and reviews research code while preserving agent-wiki memory hygiene.",
+      "mode": "primary",
+      "prompt": "{file:./.agents/implementer.md}",
+      "temperature": 0.2,
+      "color": "primary",
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "rg *": "allow",
+          "ls *": "allow",
+          "sed *": "allow",
+          "python scripts/wiki/lint.py*": "allow",
+          "python scripts/wiki/contextualize.py*": "allow",
+          "python scripts/wiki/scan_changes.py*": "allow",
+          "python scripts/wiki/build_tree.py*": "allow",
+          "python -m py_compile *": "allow"
+        },
+        "external_directory": "ask",
+        "task": "allow"
+      }
+    },
+    "wiki-curator": {
+      "description": "Maintains compact project truth in wiki/ and structured registries in knowledge/.",
+      "mode": "primary",
+      "prompt": "{file:./.agents/wiki-curator.md}",
+      "temperature": 0.1,
+      "color": "accent",
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "python scripts/wiki/lint.py*": "allow",
+          "python scripts/wiki/contextualize.py*": "allow",
+          "python scripts/wiki/scan_changes.py*": "allow",
+          "python scripts/wiki/build_tree.py*": "allow",
+          "python scripts/wiki/rollover_logs.py*": "allow",
+          "python scripts/wiki/ingest_source.py*": "allow",
+          "python scripts/wiki/timestamp.py*": "allow"
+        },
+        "external_directory": "ask",
+        "task": "allow"
+      }
+    },
+    "deep-research": {
+      "description": "Finds credible papers, builds literature context, and writes evidence-linked research memos.",
+      "mode": "primary",
+      "prompt": "{file:./.agents/deep-research.md}",
+      "temperature": 0.25,
+      "color": "info",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "python scripts/wiki/contextualize.py*": "allow",
+          "python scripts/wiki/ingest_source.py*": "allow",
+          "python scripts/wiki/scan_changes.py*": "allow"
+        },
+        "webfetch": "allow",
+        "websearch": "allow",
+        "external_directory": "ask"
+      }
+    },
+    "reporter": {
+      "description": "Creates dated, evidence-linked project reports for status review and paper preparation.",
+      "mode": "primary",
+      "prompt": "{file:./.agents/reporter.md}",
+      "temperature": 0.15,
+      "color": "success",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "python scripts/wiki/contextualize.py*": "allow",
+          "python scripts/wiki/new_report.py*": "allow",
+          "python scripts/wiki/scan_changes.py*": "allow",
+          "python scripts/wiki/lint.py*": "allow"
+        },
+        "webfetch": "allow",
+        "websearch": "allow",
+        "external_directory": "ask"
+      }
+    }
+  },
+  "command": {
+    "context-implementer": {
+      "description": "Load the implementer context pack.",
+      "agent": "implementer",
+      "template": "Use this OpenCode implementer context pack as startup context:\n\n!`python scripts/wiki/contextualize.py --role implementer --no-git --max-lines 180`\n\nRestate the current task and choose the smallest route from wiki/ROUTING_TABLE.md."
+    },
+    "context-curator": {
+      "description": "Load the wiki-curator context pack.",
+      "agent": "wiki-curator",
+      "template": "Use this OpenCode wiki-curator context pack as startup context:\n\n!`python scripts/wiki/contextualize.py --role wiki-curator --no-git --max-lines 180`\n\nReview only routed evidence and keep wiki/ compact."
+    },
+    "context-research": {
+      "description": "Load the deep-research context pack.",
+      "agent": "deep-research",
+      "template": "Use this OpenCode deep-research context pack as startup context:\n\n!`python scripts/wiki/contextualize.py --role deep-research --no-git --max-lines 180`\n\nFocus on credible primary sources and implementation-relevant literature."
+    },
+    "context-reporter": {
+      "description": "Load the reporter context pack.",
+      "agent": "reporter",
+      "template": "Use this OpenCode reporter context pack as startup context:\n\n!`python scripts/wiki/contextualize.py --role reporter --no-git --max-lines 180`\n\nCreate reports only from cited wiki, registry, source, result, and decision evidence."
+    },
+    "wiki-lint": {
+      "description": "Run the agent-wiki lint gate and explain failures.",
+      "agent": "wiki-curator",
+      "template": "Run and interpret the wiki lint gate:\n\n!`python scripts/wiki/lint.py`\n\nIf it fails, explain the exact issue and propose or apply the smallest fix."
+    },
+    "wiki-scan": {
+      "description": "Record a curator handoff from current git changes.",
+      "agent": "wiki-curator",
+      "template": "Record and summarize a curator handoff:\n\n!`python scripts/wiki/scan_changes.py --summary 'OpenCode wiki-scan handoff.'`\n\nExplain which routes the curator should inspect and whether current truth may have changed."
+    },
+    "wiki-map": {
+      "description": "Regenerate wiki/PROJECT_MAP.md.",
+      "agent": "wiki-curator",
+      "template": "Regenerate the project map and summarize structural changes:\n\n!`python scripts/wiki/build_tree.py`\n\nThen inspect wiki/PROJECT_MAP.md if needed and note whether routing should change."
+    },
+    "new-report": {
+      "description": "Create a dated report scaffold. Pass a short title as arguments.",
+      "agent": "reporter",
+      "template": "Create a dated report scaffold for: $ARGUMENTS\n\nRun `python scripts/wiki/new_report.py \"$ARGUMENTS\"`, then fill it only from cited evidence. Register it and leave a curator handoff."
+    }
+  }
+}

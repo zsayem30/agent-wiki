@@ -120,7 +120,8 @@ Before completing code work, run focused tests appropriate to the changed code.
 
 ## Harness Notes
 
-- Codex and OpenCode agents should use this `AGENTS.md` plus `.agents/<role>.md`.
+- OpenCode is the primary harness. Use `opencode.json` and `.opencode/README.md`; start role sessions with `/context-implementer`, `/context-curator`, `/context-research`, or `/context-reporter`.
+- Codex agents should use this `AGENTS.md` plus `.agents/<role>.md`.
 - Claude Code agents should read `CLAUDE.md`, which points back to this file.
 - Any harness may run `python scripts/wiki/contextualize.py --role <role>`.
 

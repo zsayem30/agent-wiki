@@ -15,6 +15,13 @@ Current project truth lives in:
 - `wiki/plans/active_plan.md`
 - `knowledge/project_graph.yaml`
 
+## OpenCode
+
+OpenCode is the primary harness. The root `opencode.json` defines the default
+`implementer` agent, the `wiki-curator`, `deep-research`, and `reporter`
+agents, and commands such as `/context-implementer`, `/wiki-lint`, and
+`/wiki-scan`.
+
 ## Read Order
 
 Every agent should start with:

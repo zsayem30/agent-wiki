@@ -1,8 +1,8 @@
 # agent-wiki
 
 `agent-wiki` is a reusable scaffold for maintaining clean, durable project
-memory in research coding projects. It is designed for LLM agents working in
-Codex, Claude Code, OpenCode, or any terminal-based coding harness.
+memory in research coding projects. It is designed OpenCode-first, while remaining compatible with Codex,
+Claude Code, and other terminal-based coding harnesses.
 
 The goal is to prevent documentation sprawl: long plans, deep research notes,
 experiment reports, and debugging writeups can exist, but they should not
@@ -26,7 +26,8 @@ cannot tell what is current. `agent-wiki` separates these surfaces:
 
 | Surface | Path | Purpose |
 |---|---|---|
-| Agent contract | `AGENTS.md`, `CLAUDE.md`, `.agents/` | Rules and role prompts for every agent harness. |
+| OpenCode config | `opencode.json`, `.opencode/` | Primary harness setup, agents, commands, and OpenCode instructions. |
+| Agent contract | `AGENTS.md`, `CLAUDE.md`, `.agents/` | Canonical rules and role prompts shared across harnesses. |
 | Compact wiki | `wiki/` | Current truth, routing, topic hubs, decisions, open questions. |
 | Structured knowledge | `knowledge/` | Machine-readable manifests, registries, events, handoffs. |
 | Source material | `sources/` | User-provided plans, ideas, papers, long agent reports, provenance. |
@@ -73,24 +74,29 @@ git clone <agent-wiki-repo> my-project
 cd my-project
 ```
 
-Start an implementer agent:
+Open OpenCode in the project root:
+
+```bash
+opencode
+```
+
+The root `opencode.json` makes `implementer` the default primary agent and
+defines the other project roles. Start with one of the native commands:
+
+```text
+/context-implementer
+/context-curator
+/context-research
+/context-reporter
+```
+
+For a two-terminal workflow, use `implementer` in Terminal 1 and
+`wiki-curator` in Terminal 2. The plain Python commands still work:
 
 ```bash
 python scripts/wiki/contextualize.py --role implementer
-```
-
-Start a curator agent in another terminal:
-
-```bash
 python scripts/wiki/contextualize.py --role wiki-curator
 python scripts/wiki/scan_changes.py --watch
-```
-
-If your harness supports custom commands, use the matching command:
-
-```text
-/contextualize --role implementer
-/contextualize --role wiki-curator
 ```
 
 Then work normally. Ask the implementer to write plans, code, tests, or
@@ -103,12 +109,32 @@ multiple agent harnesses.
 
 | Harness | Entry Point |
 |---|---|
+| OpenCode | Use root `opencode.json`; start with `/context-implementer`, `/context-curator`, `/context-research`, or `/context-reporter`. |
 | Codex | Read `AGENTS.md`; run `python scripts/wiki/contextualize.py --role <role>`. |
 | Claude Code | Read `CLAUDE.md`; use `/contextualize --role <role>` or run the script. |
-| OpenCode | Read `AGENTS.md` and `.opencode/README.md`; run the script. |
 | Generic terminal agent | Read `AGENTS.md`; run the script. |
 
 The role contracts live in `.agents/` and are intentionally harness-neutral.
+
+
+## OpenCode Native Setup
+
+The root `opencode.json` is part of the scaffold. It defines four primary
+OpenCode agents:
+
+| Agent | Use |
+|---|---|
+| `implementer` | Default agent for implementation, debugging, tests, reviews, and technical plans. |
+| `wiki-curator` | Maintains compact wiki truth, routes, registries, logs, and open questions. |
+| `deep-research` | Finds credible papers, writes paper cards, and prepares related-work context. |
+| `reporter` | Generates dated, evidence-linked status and paper-prep reports. |
+
+The config intentionally does not set a model. OpenCode inherits the user's
+global provider/model selection, so the same scaffold can run with Claude,
+OpenAI/Codex, local models, or any configured OpenCode provider.
+
+Native commands include `/wiki-lint`, `/wiki-scan`, `/wiki-map`, and
+`/new-report <title>`. See `.opencode/README.md` for details.
 
 ## Agent Roles
 
