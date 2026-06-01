@@ -14,6 +14,12 @@
   --aw-accent-strong: #684128;
   --aw-accent-soft: rgba(138, 90, 59, 0.12);
   --aw-shadow: rgba(32, 26, 20, 0.08);
+  --aw-table-bg: #fffaf2;
+  --aw-table-head-bg: #ece3d4;
+  --aw-table-row-bg: #fffaf2;
+  --aw-table-row-alt-bg: #f5efe5;
+  --aw-table-border: #d8ccba;
+  --aw-table-hover: #f0e5d4;
   --aw-font-body: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --aw-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
@@ -33,6 +39,12 @@ html[data-theme="dark"] {
   --aw-accent-strong: #efc28b;
   --aw-accent-soft: rgba(215, 161, 109, 0.14);
   --aw-shadow: rgba(0, 0, 0, 0.18);
+  --aw-table-bg: #1c1a16;
+  --aw-table-head-bg: #2d271f;
+  --aw-table-row-bg: #1f1c18;
+  --aw-table-row-alt-bg: #252119;
+  --aw-table-border: #40372d;
+  --aw-table-hover: #30291f;
 }
 
 html,
@@ -333,4 +345,182 @@ footer p,
     margin-top: 0.75rem;
     width: 100%;
   }
+}
+
+/* Strong RTD overrides. These keep every generated page on the same theme,
+   including active sidebar branches and Sphinx tables whose defaults are more
+   specific than the base rules above. */
+html[data-theme] body,
+html[data-theme] .wy-grid-for-nav,
+html[data-theme] .wy-body-for-nav,
+html[data-theme] .wy-nav-content-wrap,
+html[data-theme] .wy-nav-content,
+html[data-theme] .rst-content,
+html[data-theme] .rst-content .document,
+html[data-theme] .rst-content section,
+html[data-theme] .rst-content div.section,
+html[data-theme] [role="main"] {
+  background: var(--aw-page-bg) !important;
+  color: var(--aw-text) !important;
+}
+
+html[data-theme] .wy-nav-side,
+html[data-theme] .wy-side-scroll,
+html[data-theme] .wy-menu,
+html[data-theme] .wy-menu-vertical,
+html[data-theme] .wy-menu-vertical ul,
+html[data-theme] .wy-menu-vertical li,
+html[data-theme] .wy-menu-vertical li.current,
+html[data-theme] .wy-menu-vertical li.current ul,
+html[data-theme] .wy-menu-vertical li.on a,
+html[data-theme] .wy-menu-vertical li.current > a,
+html[data-theme] .wy-menu-vertical li.current a,
+html[data-theme] .wy-menu-vertical li.toctree-l1.current > a,
+html[data-theme] .wy-menu-vertical li.toctree-l2.current > a,
+html[data-theme] .wy-menu-vertical li.toctree-l3.current > a,
+html[data-theme] .wy-menu-vertical li.toctree-l4.current > a,
+html[data-theme] .wy-menu-vertical li.toctree-l5.current > a {
+  background: var(--aw-sidebar-bg) !important;
+  border: 0 !important;
+}
+
+html[data-theme] .wy-menu-vertical a,
+html[data-theme] .wy-menu-vertical li.current a,
+html[data-theme] .wy-menu-vertical li.current li.toctree-l2 > a,
+html[data-theme] .wy-menu-vertical li.current li.toctree-l3 > a,
+html[data-theme] .wy-menu-vertical li.current li.toctree-l4 > a,
+html[data-theme] .wy-menu-vertical li.current li.toctree-l5 > a {
+  color: var(--aw-muted) !important;
+}
+
+html[data-theme] .wy-menu-vertical a:hover,
+html[data-theme] .wy-menu-vertical li.current > a:hover,
+html[data-theme] .wy-menu-vertical li.current li.toctree-l2 > a:hover,
+html[data-theme] .wy-menu-vertical li.current li.toctree-l3 > a:hover,
+html[data-theme] .wy-menu-vertical li.current li.toctree-l4 > a:hover,
+html[data-theme] .wy-menu-vertical li.current li.toctree-l5 > a:hover,
+html[data-theme] .wy-menu-vertical li.current > a.current,
+html[data-theme] .wy-menu-vertical li.toctree-l1.current > a,
+html[data-theme] .wy-menu-vertical li.toctree-l2.current > a,
+html[data-theme] .wy-menu-vertical li.toctree-l3.current > a,
+html[data-theme] .wy-menu-vertical li.toctree-l4.current > a,
+html[data-theme] .wy-menu-vertical li.toctree-l5.current > a {
+  background: var(--aw-accent-soft) !important;
+  color: var(--aw-text) !important;
+}
+
+html[data-theme] .rst-content .wy-table-responsive {
+  margin: 1.2rem 0 1.8rem;
+  overflow-x: auto;
+}
+
+html[data-theme] .rst-content table.docutils,
+html[data-theme].writer-html5 .rst-content table.docutils,
+html[data-theme].writer-html4 .rst-content table.docutils,
+html[data-theme] .rst-content .wy-table,
+html[data-theme] .rst-content table.field-list:not(.footnote) {
+  width: 100%;
+  margin: 1.2rem 0 1.8rem;
+  border: 1px solid var(--aw-table-border) !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 12px;
+  background: var(--aw-table-bg) !important;
+  box-shadow: none !important;
+  color: var(--aw-text) !important;
+  overflow: hidden;
+}
+
+html[data-theme] .rst-content table.docutils thead,
+html[data-theme] .rst-content table.docutils thead tr,
+html[data-theme].writer-html5 .rst-content table.docutils thead,
+html[data-theme].writer-html5 .rst-content table.docutils thead tr {
+  background: var(--aw-table-head-bg) !important;
+}
+
+html[data-theme] .rst-content table.docutils th,
+html[data-theme].writer-html5 .rst-content table.docutils th,
+html[data-theme] .rst-content .wy-table th,
+html[data-theme] .rst-content table.field-list:not(.footnote) th {
+  padding: 0.78rem 0.95rem !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--aw-table-border) !important;
+  border-right: 1px solid var(--aw-table-border) !important;
+  background: var(--aw-table-head-bg) !important;
+  color: var(--aw-text) !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  line-height: 1.35 !important;
+  text-align: left;
+  text-transform: uppercase;
+  vertical-align: bottom !important;
+}
+
+html[data-theme] .rst-content table.docutils th:last-child,
+html[data-theme].writer-html5 .rst-content table.docutils th:last-child {
+  border-right: 0 !important;
+}
+
+html[data-theme] .rst-content table.docutils tbody tr,
+html[data-theme].writer-html5 .rst-content table.docutils tbody tr {
+  background: var(--aw-table-row-bg) !important;
+}
+
+html[data-theme] .rst-content table.docutils tbody tr:nth-child(even),
+html[data-theme].writer-html5 .rst-content table.docutils tbody tr:nth-child(even) {
+  background: var(--aw-table-row-alt-bg) !important;
+}
+
+html[data-theme] .rst-content table.docutils tbody tr:hover,
+html[data-theme].writer-html5 .rst-content table.docutils tbody tr:hover {
+  background: var(--aw-table-hover) !important;
+}
+
+html[data-theme] .rst-content table.docutils td,
+html[data-theme].writer-html5 .rst-content table.docutils td,
+html[data-theme] .rst-content .wy-table td,
+html[data-theme] .rst-content table.field-list:not(.footnote) td {
+  padding: 0.78rem 0.95rem !important;
+  border: 0 !important;
+  border-top: 1px solid var(--aw-table-border) !important;
+  border-right: 1px solid var(--aw-table-border) !important;
+  background: transparent !important;
+  color: var(--aw-text) !important;
+  font-size: 0.92rem !important;
+  line-height: 1.5 !important;
+  vertical-align: top !important;
+  white-space: normal !important;
+}
+
+html[data-theme] .rst-content table.docutils td:last-child,
+html[data-theme].writer-html5 .rst-content table.docutils td:last-child {
+  border-right: 0 !important;
+}
+
+html[data-theme] .rst-content table.docutils tbody tr:first-child td,
+html[data-theme].writer-html5 .rst-content table.docutils tbody tr:first-child td {
+  border-top: 0 !important;
+}
+
+html[data-theme] .rst-content table.docutils p,
+html[data-theme].writer-html5 .rst-content table.docutils td > p,
+html[data-theme].writer-html5 .rst-content table.docutils th > p,
+html[data-theme] .rst-content .wy-table p {
+  margin: 0 !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+html[data-theme] .rst-content table.docutils code.literal,
+html[data-theme] .rst-content table.docutils tt.literal {
+  background: var(--aw-soft) !important;
+  color: var(--aw-code-text) !important;
+  white-space: nowrap;
+}
+
+html[data-theme] .wy-table-responsive table td,
+html[data-theme] .wy-table-responsive table th {
+  white-space: normal !important;
 }
