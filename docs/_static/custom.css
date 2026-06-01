@@ -127,35 +127,41 @@ body {
 }
 
 .wy-side-nav-search {
-  background: transparent;
-  padding: 1.1rem 1rem 0.8rem;
+  background: var(--aw-sidebar-bg) !important;
+  padding: 1rem 1rem 0.85rem;
   text-align: left;
 }
 
-.aw-sidebar-logo-link {
+.wy-side-nav-search > a.aw-sidebar-logo-link,
+.wy-side-nav-search > a.aw-sidebar-logo-link:hover,
+.wy-side-nav-search > a.aw-sidebar-logo-link:focus {
   display: block;
-  margin: 0 0 0.9rem;
-  padding: 0.1rem 0 0.35rem;
-  text-align: left;
+  width: 100%;
+  margin: 0 0 0.85rem;
+  padding: 0;
+  border: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  line-height: 0;
+  text-decoration: none;
 }
 
 .aw-sidebar-logo {
   display: block;
-  width: min(100%, 230px);
-  height: auto;
-  margin: 0;
+  width: min(100%, 232px);
+  height: 76px;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: url("agent-wiki-light.svg");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-.aw-sidebar-logo-dark {
-  display: none;
-}
-
-html[data-theme="dark"] .aw-sidebar-logo-light {
-  display: none;
-}
-
-html[data-theme="dark"] .aw-sidebar-logo-dark {
-  display: block;
+html[data-theme="dark"] .aw-sidebar-logo {
+  background-image: url("agent-wiki-dark.svg");
 }
 
 .wy-side-nav-search > a,

@@ -17,8 +17,7 @@
 {% block sidebartitle %}
 {%- set _root_doc = root_doc|default(master_doc) %}
 <a href="{{ pathto(_root_doc) }}" class="aw-sidebar-logo-link" aria-label="agent-wiki home">
-  <img src="{{ pathto('_static/agent-wiki-light.svg', 1) }}" class="aw-sidebar-logo aw-sidebar-logo-light" alt="agent-wiki"/>
-  <img src="{{ pathto('_static/agent-wiki-dark.svg', 1) }}" class="aw-sidebar-logo aw-sidebar-logo-dark" alt="agent-wiki"/>
+  <span class="aw-sidebar-logo" aria-hidden="true"></span>
 </a>
 
 {%- if READTHEDOCS or DEBUG %}
