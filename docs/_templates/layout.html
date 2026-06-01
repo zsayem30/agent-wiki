@@ -1,0 +1,15 @@
+{% extends "!layout.html" %}
+
+{% block extrahead %}
+{{ super() }}
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem("agentWikiTheme");
+    document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+  } catch (error) {
+    document.documentElement.dataset.theme = "light";
+  }
+})();
+</script>
+{% endblock %}
