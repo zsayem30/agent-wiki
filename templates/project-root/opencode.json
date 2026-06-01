@@ -22,7 +22,9 @@
       "python agent-wiki/scripts/wiki/build_tree.py*": "allow",
       "python agent-wiki/scripts/wiki/scan_changes.py*": "allow",
       "python agent-wiki/scripts/wiki/ingest_source.py*": "allow",
-      "python agent-wiki/scripts/wiki/timestamp.py*": "allow"
+      "python agent-wiki/scripts/wiki/timestamp.py*": "allow",
+      "python agent-wiki/scripts/wiki/inject_host_agent_rules.py*": "allow",
+      "python agent-wiki/scripts/wiki/check_host_agent_rules.py*": "allow"
     },
     "external_directory": "ask",
     "webfetch": "allow",
@@ -68,7 +70,9 @@
           "python agent-wiki/scripts/wiki/build_tree.py*": "allow",
           "python agent-wiki/scripts/wiki/rollover_logs.py*": "allow",
           "python agent-wiki/scripts/wiki/ingest_source.py*": "allow",
-          "python agent-wiki/scripts/wiki/timestamp.py*": "allow"
+          "python agent-wiki/scripts/wiki/timestamp.py*": "allow",
+          "python agent-wiki/scripts/wiki/inject_host_agent_rules.py*": "allow",
+          "python agent-wiki/scripts/wiki/check_host_agent_rules.py*": "allow"
         },
         "external_directory": "ask",
         "task": "allow"
@@ -100,6 +104,16 @@
       "description": "Check active wiki logs for rollover.",
       "agent": "wiki-curator",
       "template": "Check active logs for rollover:\n\n!`python agent-wiki/scripts/wiki/rollover_logs.py --threshold 800`\n\nIf rollover is needed, summarize which logs should close or archive."
+    },
+    "wiki-inject-rules": {
+      "description": "Inject agent-wiki memory rules into host OpenCode agents. Pass --agent/--exclude args if needed.",
+      "agent": "wiki-curator",
+      "template": "Inject agent-wiki memory rules into host agents. If $ARGUMENTS is empty, inject into all non-curator host agents. If arguments are provided, pass them through.\n\n!`python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root . $ARGUMENTS`\n\nSummarize which agents now respect project memory rules."
+    },
+    "wiki-check-rules": {
+      "description": "Check whether selected/default host agents include agent-wiki memory rules.",
+      "agent": "wiki-curator",
+      "template": "Check host-agent memory-rule injection status. If $ARGUMENTS is empty, check all non-curator host agents.\n\n!`python agent-wiki/scripts/wiki/check_host_agent_rules.py --project-root . $ARGUMENTS`\n\nIf any agents are missing rules, explain how to inject all agents or selected agents."
     }
   }
 }

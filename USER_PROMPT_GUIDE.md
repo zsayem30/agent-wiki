@@ -24,6 +24,33 @@ opencode
 
 If `opencode.json` or `AGENTS.md` already exists, merge the template sections.
 
+## Inject Memory Rules Into Host Agents
+
+After you define project-specific agents in root `opencode.json`, inject
+agent-wiki memory behavior into the agents that should preserve durable work.
+
+Default: all non-curator host agents.
+
+```text
+/wiki-inject-rules
+```
+
+Selective: only agents you name.
+
+```text
+/wiki-inject-rules --agent implementer --agent deep-research
+```
+
+Exclude scratch agents.
+
+```text
+/wiki-inject-rules --exclude scratch
+```
+
+Injected agents will ask whether meaningful brainstorms, plans, implementations,
+debug findings, experiment analyses, or reports should be preserved if you did
+not already specify that.
+
 ## Start The Curator
 
 Inside OpenCode from the host root:

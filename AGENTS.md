@@ -91,6 +91,36 @@ Important claims need evidence. Evidence can be:
 If evidence is missing or ambiguous, record an open question instead of
 updating current truth.
 
+## Host Agent Memory Rule Injection
+
+Host agents that should contribute to project memory must include:
+
+```text
+{file:./agent-wiki/.opencode/host-agent-memory-rules.md}
+```
+
+in their OpenCode prompt.
+
+Inject all non-curator host agents by default:
+
+```bash
+python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root .
+```
+
+Inject only selected agents:
+
+```bash
+python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root . --agent implementer --agent reporter
+```
+
+Exclude scratch agents:
+
+```bash
+python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root . --exclude scratch
+```
+
+The injector is idempotent and can be rerun after new host agents are added.
+
 ## Handoffs
 
 After meaningful host-project work, run from the host root:

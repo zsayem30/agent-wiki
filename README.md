@@ -85,6 +85,34 @@ Host projects should define their own implementer, deep-research, reporter, or
 domain-specific agents in the root `opencode.json`. Optional example prompts
 are available in `agent-wiki/templates/optional-agents/`.
 
+## Host Agent Memory Rules
+
+`agent-wiki` can inject memory hygiene rules into host OpenCode agents. This is
+how project-specific implementers, researchers, and reporters learn to preserve
+durable work and leave curator handoffs.
+
+Default injection targets all non-curator host agents:
+
+```bash
+python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root .
+```
+
+Selective injection targets only named agents:
+
+```bash
+python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root . --agent implementer --agent reporter
+```
+
+Scratch agents can be excluded:
+
+```bash
+python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root . --exclude scratch
+```
+
+The injected rules tell host agents to ask whether durable brainstorms, plans,
+implementations, debug findings, research, or reports should be preserved when
+the user has not already specified memory behavior.
+
 ## Default Flow
 
 ```text

@@ -14,3 +14,9 @@ scan:
 
 timestamp:
 	python scripts/wiki/timestamp.py
+
+inject:
+	python scripts/wiki/inject_host_agent_rules.py --project-root .
+
+check-rules:
+	python scripts/wiki/check_host_agent_rules.py --project-root .
