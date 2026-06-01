@@ -11,6 +11,7 @@ release = "0.1"
 extensions = [
     "myst_parser",
     "sphinx_copybutton",
+    "sphinxcontrib.mermaid",
 ]
 
 source_suffix = {
@@ -51,3 +52,14 @@ copybutton_prompt_text = r"^(\$ |>>> |\.\.\. )"
 copybutton_prompt_is_regexp = True
 copybutton_remove_prompts = True
 copybutton_copy_empty_lines = False
+
+
+mermaid_init_config = {
+    "startOnLoad": False,
+    "securityLevel": "strict",
+    "themeVariables": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+    },
+}
+mermaid_light_theme = "base"
+mermaid_dark_theme = "dark"

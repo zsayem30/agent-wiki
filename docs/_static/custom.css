@@ -551,3 +551,35 @@ html[data-theme] .wy-table-responsive table td,
 html[data-theme] .wy-table-responsive table th {
   white-space: normal !important;
 }
+
+html[data-theme] .mermaid-container,
+html[data-theme] pre.mermaid {
+  width: 100% !important;
+  margin: 1.25rem 0 1.9rem !important;
+  padding: 1rem !important;
+  border: 1px solid var(--aw-table-border) !important;
+  border-radius: 12px !important;
+  background: var(--aw-table-bg) !important;
+  color: var(--aw-text) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme] .mermaid-container > pre.mermaid,
+html[data-theme] .mermaid-container pre.mermaid {
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+html[data-theme] .mermaid-container svg,
+html[data-theme] pre.mermaid svg {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+html[data-theme] .mermaid-fullscreen-btn {
+  border: 1px solid var(--aw-table-border) !important;
+  border-radius: 8px !important;
+  background: var(--aw-soft) !important;
+  color: var(--aw-text) !important;
+}
