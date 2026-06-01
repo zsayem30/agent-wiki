@@ -13,3 +13,22 @@
 })();
 </script>
 {% endblock %}
+
+{% block sidebartitle %}
+{%- set _root_doc = root_doc|default(master_doc) %}
+<a href="{{ pathto(_root_doc) }}" class="aw-sidebar-logo-link" aria-label="agent-wiki home">
+  <img src="{{ pathto('_static/agent-wiki-light.svg', 1) }}" class="aw-sidebar-logo aw-sidebar-logo-light" alt="agent-wiki"/>
+  <img src="{{ pathto('_static/agent-wiki-dark.svg', 1) }}" class="aw-sidebar-logo aw-sidebar-logo-dark" alt="agent-wiki"/>
+</a>
+
+{%- if READTHEDOCS or DEBUG %}
+  {%- if theme_version_selector or theme_language_selector %}
+    <div class="switch-menus">
+      <div class="version-switch"></div>
+      <div class="language-switch"></div>
+    </div>
+  {%- endif %}
+{%- endif %}
+
+{%- include "searchbox.html" %}
+{% endblock %}

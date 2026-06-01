@@ -129,6 +129,33 @@ body {
 .wy-side-nav-search {
   background: transparent;
   padding: 1.1rem 1rem 0.8rem;
+  text-align: left;
+}
+
+.aw-sidebar-logo-link {
+  display: block;
+  margin: 0 0 0.9rem;
+  padding: 0.1rem 0 0.35rem;
+  text-align: left;
+}
+
+.aw-sidebar-logo {
+  display: block;
+  width: min(100%, 230px);
+  height: auto;
+  margin: 0;
+}
+
+.aw-sidebar-logo-dark {
+  display: none;
+}
+
+html[data-theme="dark"] .aw-sidebar-logo-light {
+  display: none;
+}
+
+html[data-theme="dark"] .aw-sidebar-logo-dark {
+  display: block;
 }
 
 .wy-side-nav-search > a,
