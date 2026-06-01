@@ -26,3 +26,5 @@ results/**/*
 !results/.gitkeep
 *.log
 
+docs/_build/
+.doctrees/

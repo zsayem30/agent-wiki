@@ -1,15 +1,26 @@
-# Additional Documentation
+# Documentation Source
 
-The primary scaffold documentation is:
+This directory contains the Sphinx/MyST documentation source for the
+`agent-wiki` Read the Docs site.
 
-- `../README.md`
-- `../USER_PROMPT_GUIDE.md`
+Build locally with:
 
-Use this directory only for supplementary documentation about the `agent-wiki`
-subfolder scaffold itself.
+```bash
+python -m pip install -r docs/requirements.txt
+python -m sphinx -b html docs docs/_build/html
+```
 
-Do not put host project memory here by default. Host project memory belongs in:
+Read the Docs uses `.readthedocs.yaml` at the repository root and
+`docs/conf.py` as the Sphinx configuration.
 
-- `../wiki/` for compact truth;
-- `../knowledge/` for structured state;
-- `../sources/` for long or raw source material.
+Primary pages:
+
+- `index.md`
+- `getting-started.md`
+- `installation.md`
+- `opencode-workflow.md`
+- `memory-design.md`
+- `host-agent-rules.md`
+- `prompting-guide.md`
+- `reference/scripts.md`
+- `reference/templates.md`

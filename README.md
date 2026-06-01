@@ -44,6 +44,19 @@ The compact wiki is not a dumping ground. It is the distilled project memory
 that tells agents what to read, what is true now, what has been tried, and what
 should happen next.
 
+## Documentation Site
+
+This repository includes a Sphinx/MyST documentation site configured for Read
+the Docs. Source lives in `docs/`; Read the Docs uses `.readthedocs.yaml` and
+`docs/conf.py`.
+
+Local build:
+
+```bash
+python -m pip install -r docs/requirements.txt
+python -m sphinx -b html docs docs/_build/html
+```
+
 ## Install In A Host Project
 
 From the host project root:

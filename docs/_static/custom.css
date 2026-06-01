@@ -1,0 +1,11 @@
+/* Small readability improvements for dense workflow docs. */
+.wy-nav-content {
+  max-width: 980px;
+}
+.rst-content table.docutils td,
+.rst-content table.docutils th {
+  vertical-align: top;
+}
+.rst-content code.literal {
+  white-space: nowrap;
+}
