@@ -64,7 +64,7 @@ python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root .
 
 Useful options:
 
-```bash
+```text
 --agent implementer
 --exclude scratch
 --list

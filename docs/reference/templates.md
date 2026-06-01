@@ -5,8 +5,9 @@ Templates live in `agent-wiki/templates/`.
 ## Project Root Templates
 
 ```text
-agent-wiki/templates/project-root/opencode.json
-agent-wiki/templates/project-root/AGENTS.md
+agent-wiki/templates/project-root/
+|-- AGENTS.md
+`-- opencode.json
 ```
 
 Copy or merge these into the host project root.
@@ -14,9 +15,10 @@ Copy or merge these into the host project root.
 ## Optional Host Agent Examples
 
 ```text
-agent-wiki/templates/optional-agents/implementer.md
-agent-wiki/templates/optional-agents/deep-research.md
-agent-wiki/templates/optional-agents/reporter.md
+agent-wiki/templates/optional-agents/
+|-- deep-research.md
+|-- implementer.md
+`-- reporter.md
 ```
 
 These are examples only. Host projects should adapt them to local code,

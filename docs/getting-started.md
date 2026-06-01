@@ -1,40 +1,30 @@
 # Getting Started
 
-This page shows the intended first-session workflow for a new research project.
+This page assumes the scaffold is already installed. If it is not, start with
+[Installation](installation.md).
 
-## The Intended Shape
+## First Session Shape
 
-A host project should look like this:
+A clean host project keeps active work and durable project memory separate:
 
 ```text
 constrained-planning/
-  opencode.json
-  AGENTS.md
-  src/
-  experiments/
-  results/
-  figures/
-  paper-wiki/
-  agent-wiki/
+|-- opencode.json          # active OpenCode config for the host project
+|-- AGENTS.md              # host-level agent contract
+|-- src/                   # research code
+|-- experiments/           # experiment scripts and configs
+|-- results/               # generated outputs owned by the host project
+|-- figures/               # plots and paper figures
+|-- paper-wiki/            # optional paper-writing workspace
+`-- agent-wiki/            # compact agent memory subsystem
+    |-- wiki/              # small current-truth pages
+    |-- knowledge/         # structured registries and handoffs
+    `-- sources/           # long evidence, plans, papers, reports
 ```
 
-The host project owns implementation and research work. `agent-wiki/` owns
-project memory hygiene.
+## Start The Curator
 
-## Install The Scaffold
-
-From the host project root:
-
-```bash
-git clone https://github.com/zsayem30/agent-wiki agent-wiki
-cp agent-wiki/templates/project-root/opencode.json ./opencode.json
-cp agent-wiki/templates/project-root/AGENTS.md ./AGENTS.md
-```
-
-If your host project already has `opencode.json` or `AGENTS.md`, merge the
-agent-wiki sections instead of overwriting your existing files.
-
-## Start OpenCode
+Launch OpenCode from the host root:
 
 ```bash
 opencode
@@ -47,34 +37,43 @@ Then load the curator context:
 ```
 
 The bundled `wiki-curator` reads the compact startup route and maintains
-`agent-wiki/wiki/` and `agent-wiki/knowledge/`.
+`agent-wiki/wiki/` and `agent-wiki/knowledge/`. It should not bulk-read the
+host repository unless the route or user request calls for it.
 
 ## Add Starting Material
 
-Put initial plans, ideas, papers, or notes in `agent-wiki/sources/`:
+Put plans, ideas, papers, or notes in `agent-wiki/sources/`:
 
 ```text
-agent-wiki/sources/inbox/implementation_plan.md
-agent-wiki/sources/ideas/idea.md
-agent-wiki/sources/papers/paper1.md
+agent-wiki/sources/
+|-- inbox/
+|   `-- implementation_plan.md
+|-- ideas/
+|   `-- idea.md
+|-- papers/
+|   |-- paper1.md
+|   `-- paper2.md
+`-- reports/
 ```
 
-Register a source:
+Register a source when you want it to become visible to the curator:
 
 ```bash
-python agent-wiki/scripts/wiki/ingest_source.py   agent-wiki/sources/inbox/implementation_plan.md   --kind plan
+python agent-wiki/scripts/wiki/ingest_source.py agent-wiki/sources/inbox/implementation_plan.md --kind plan
 ```
 
-Then ask the curator to distill only durable, evidence-backed truth into:
+Then ask the curator to distill only durable, evidence-backed truth into the
+compact wiki:
 
 ```text
-agent-wiki/wiki/CURRENT_STATE.md
-agent-wiki/wiki/topics/project_overview.md
-agent-wiki/wiki/plans/active_plan.md
-agent-wiki/wiki/OPEN_QUESTIONS.md
+Please review the newly ingested implementation plan. Update compact project
+memory only where the source supports durable truth, and put unresolved points
+in OPEN_QUESTIONS.md.
 ```
 
-## The Core Loop
+## Run The Work Loop
+
+The normal loop is:
 
 ```text
 Host agents do work
@@ -86,3 +85,8 @@ Host agents do work
 
 The point is not to stop agents from writing. The point is to keep raw work,
 structured state, and current truth in separate places.
+
+## Continue With OpenCode
+
+For the detailed two-agent OpenCode pattern, command list, and memory-rule
+injection workflow, continue to [OpenCode Workflow](opencode-workflow.md).

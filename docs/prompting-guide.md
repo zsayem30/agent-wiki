@@ -2,6 +2,7 @@
 
 The user should not have to repeat memory hygiene instructions in every prompt.
 Use the injector so host agents naturally ask about project memory when needed.
+Every fenced block on this site has a copy button.
 
 ## First Curator Prompt
 
@@ -55,5 +56,8 @@ For scratch sessions, say so explicitly:
 This is scratch exploration. Do not preserve it in project memory unless I ask.
 ```
 
-Scratch agents can also be excluded from injection with `/wiki-inject-rules
---exclude scratch`.
+Scratch agents can also be excluded from injection:
+
+```text
+/wiki-inject-rules --exclude scratch
+```

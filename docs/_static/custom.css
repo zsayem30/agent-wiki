@@ -1,11 +1,212 @@
-/* Small readability improvements for dense workflow docs. */
+/* Anthropic-inspired, documentation-first styling for the RTD theme. */
+:root {
+  --aw-bg: #f7f5ef;
+  --aw-paper: #fffdf7;
+  --aw-text: #26231f;
+  --aw-muted: #665f55;
+  --aw-border: #ddd6c8;
+  --aw-nav-bg: #25231f;
+  --aw-nav-text: #f7f2e8;
+  --aw-nav-muted: #c7bba7;
+  --aw-accent: #8b5e3c;
+  --aw-accent-strong: #6f472d;
+  --aw-code-bg: #f0ece3;
+  --aw-code-text: #2d2923;
+  --aw-table-header: #eee8dc;
+}
+
+html,
+body,
+.wy-body-for-nav,
+.wy-nav-content-wrap {
+  background: var(--aw-bg);
+  color: var(--aw-text);
+}
+
 .wy-nav-content {
   max-width: 980px;
+  background: var(--aw-paper);
+  color: var(--aw-text);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+
+.rst-content h1,
+.rst-content h2,
+.rst-content h3,
+.rst-content h4,
+.rst-content h5,
+.rst-content h6 {
+  color: var(--aw-text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.rst-content p,
+.rst-content li,
+.rst-content td,
+.rst-content th {
+  color: var(--aw-text);
+}
+
+.rst-content a,
+.wy-breadcrumbs a {
+  color: var(--aw-accent-strong);
+}
+
+.rst-content a:hover,
+.wy-breadcrumbs a:hover {
+  color: var(--aw-accent);
+}
+
+.wy-nav-side,
+.wy-side-nav-search {
+  background: var(--aw-nav-bg);
+}
+
+.wy-side-nav-search > a,
+.wy-side-nav-search .wy-dropdown > a {
+  color: var(--aw-nav-text);
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: 0;
+}
+
+.wy-side-nav-search input[type="text"] {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  background: rgba(255, 253, 247, 0.08);
+  box-shadow: none;
+  color: var(--aw-nav-text);
+}
+
+.wy-menu-vertical a {
+  color: var(--aw-nav-muted);
+}
+
+.wy-menu-vertical a:hover,
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.toctree-l1.current > a {
+  background: rgba(255, 253, 247, 0.08);
+  color: var(--aw-nav-text);
+}
+
+.wy-menu-vertical header,
+.wy-menu-vertical p.caption {
+  color: #d9c7ad;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.rst-content code.literal,
+.rst-content tt.literal {
+  background: var(--aw-code-bg);
+  border: 1px solid var(--aw-border);
+  color: var(--aw-code-text);
+  white-space: nowrap;
+}
+
+.rst-content div[class^="highlight"],
+.rst-content pre.literal-block {
+  border: 1px solid var(--aw-border);
+  border-radius: 8px;
+  background: var(--aw-code-bg);
+}
+
+.rst-content div[class^="highlight"] pre,
+.rst-content pre.literal-block {
+  color: var(--aw-code-text);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.rst-content table.docutils {
+  border: 1px solid var(--aw-border);
+}
+
+.rst-content table.docutils th {
+  background: var(--aw-table-header);
+  color: var(--aw-text);
+}
+
 .rst-content table.docutils td,
 .rst-content table.docutils th {
+  border-color: var(--aw-border);
   vertical-align: top;
 }
-.rst-content code.literal {
-  white-space: nowrap;
+
+.copybtn {
+  border-radius: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --aw-bg: #151411;
+    --aw-paper: #1f1d19;
+    --aw-text: #efe8dc;
+    --aw-muted: #b8ad9d;
+    --aw-border: #3d372f;
+    --aw-nav-bg: #11100e;
+    --aw-nav-text: #f4eadb;
+    --aw-nav-muted: #b7aa97;
+    --aw-accent: #d7a36d;
+    --aw-accent-strong: #e3b987;
+    --aw-code-bg: #29251f;
+    --aw-code-text: #f3eadb;
+    --aw-table-header: #312c25;
+  }
+
+  html,
+  body,
+  .wy-body-for-nav,
+  .wy-nav-content-wrap,
+  .rst-content,
+  .rst-content .section {
+    background: var(--aw-bg);
+    color: var(--aw-text);
+  }
+
+  .wy-nav-content {
+    background: var(--aw-paper);
+  }
+
+  .wy-nav-top {
+    background: var(--aw-nav-bg);
+  }
+
+  .wy-menu-vertical li.current,
+  .wy-menu-vertical li.on a,
+  .wy-menu-vertical li.current > a,
+  .wy-menu-vertical li.toctree-l1.current > a,
+  .wy-menu-vertical li.toctree-l2.current > a {
+    background: rgba(255, 253, 247, 0.07);
+    color: var(--aw-nav-text);
+  }
+
+  .wy-menu-vertical li.current a {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .rst-content div[class^="highlight"] .highlight,
+  .rst-content div[class^="highlight"] pre,
+  .rst-content pre.literal-block {
+    background: var(--aw-code-bg);
+    color: var(--aw-code-text);
+  }
+
+  .highlight .c,
+  .highlight .c1,
+  .highlight .cm {
+    color: #a69b8c;
+  }
+
+  .wy-table-responsive table td,
+  .wy-table-responsive table th {
+    white-space: normal;
+  }
+
+  .footer,
+  footer,
+  footer p {
+    color: var(--aw-muted);
+  }
 }

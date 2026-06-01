@@ -1,22 +1,20 @@
 # OpenCode Workflow
 
-OpenCode is the primary harness for the first version of `agent-wiki`.
+This page extends [Getting Started](getting-started.md) with the practical
+OpenCode operating loop.
 
 ## Root Config Lives In The Host Project
 
 The active OpenCode config should be at the host project root:
 
 ```text
-project-root/opencode.json
+project-root/
+|-- opencode.json
+`-- agent-wiki/
+    `-- templates/project-root/opencode.json
 ```
 
-The `agent-wiki/` repository ships a template at:
-
-```text
-agent-wiki/templates/project-root/opencode.json
-```
-
-This template points OpenCode to the curator prompt and project-memory
+The template points OpenCode to the curator prompt and project-memory
 instructions inside `agent-wiki/`.
 
 ## Curator Commands
@@ -38,11 +36,23 @@ Use these commands inside OpenCode:
 For serious work, use two OpenCode sessions:
 
 ```text
-Terminal 1: host implementer/research/reporter agent
+Terminal 1: host implementer, researcher, reporter, or reviewer
 Terminal 2: wiki-curator
 ```
 
 The host agent does the work. The curator maintains compact memory.
+
+## Load Curator Context
+
+```text
+/context-curator
+```
+
+Equivalent terminal command:
+
+```bash
+python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
+```
 
 ## Host Agent Injection
 
@@ -74,3 +84,21 @@ Check coverage:
 
 Injected agents will ask whether durable session content should be preserved
 when the user did not already specify memory behavior.
+
+## Handoff From A Host Agent
+
+When implementation, debugging, research, or analysis changes durable project
+state, the host agent should run:
+
+```text
+/wiki-scan
+```
+
+Equivalent terminal command:
+
+```bash
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --summary "Short handoff summary."
+```
+
+The curator then reviews `agent-wiki/knowledge/change_inbox.jsonl` and updates
+only the compact surfaces that changed.

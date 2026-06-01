@@ -33,7 +33,7 @@ OpenCode:
 Inject only selected agents:
 
 ```bash
-python agent-wiki/scripts/wiki/inject_host_agent_rules.py   --project-root .   --agent implementer   --agent reporter
+python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root . --agent implementer --agent reporter
 ```
 
 OpenCode:
@@ -45,7 +45,7 @@ OpenCode:
 ## Excluding Scratch Agents
 
 ```bash
-python agent-wiki/scripts/wiki/inject_host_agent_rules.py   --project-root .   --exclude scratch
+python agent-wiki/scripts/wiki/inject_host_agent_rules.py --project-root . --exclude scratch
 ```
 
 OpenCode:

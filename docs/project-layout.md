@@ -6,27 +6,30 @@
 
 ```text
 project-name/
-  opencode.json
-  AGENTS.md
-  src/
-  experiments/
-  results/
-  figures/
-  paper-wiki/
-  agent-wiki/
+|-- opencode.json
+|-- AGENTS.md
+|-- src/
+|-- experiments/
+|-- results/
+|-- figures/
+|-- paper-wiki/
+`-- agent-wiki/
 ```
 
 ## The agent-wiki Subfolder
 
 ```text
 agent-wiki/
-  .agents/wiki-curator.md
-  .opencode/
-  wiki/
-  knowledge/
-  sources/
-  templates/
-  scripts/wiki/
+|-- .agents/
+|   `-- wiki-curator.md
+|-- .opencode/
+|   |-- host-agent-memory-rules.md
+|   `-- instructions.md
+|-- wiki/
+|-- knowledge/
+|-- sources/
+|-- templates/
+`-- scripts/wiki/
 ```
 
 ## Host-Owned Areas

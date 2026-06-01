@@ -1,6 +1,7 @@
 # Installation
 
-`agent-wiki` is intended to be installed as a subfolder in a host repository.
+`agent-wiki` is installed as a subfolder inside a host repository. The host
+repository owns the research code; `agent-wiki/` owns project memory.
 
 ## New Host Project
 
@@ -13,7 +14,28 @@ cp agent-wiki/templates/project-root/opencode.json ./opencode.json
 cp agent-wiki/templates/project-root/AGENTS.md ./AGENTS.md
 ```
 
-Then start OpenCode:
+After installation, the host project should look like this:
+
+```text
+constrained-planning/
+|-- opencode.json
+|-- AGENTS.md
+|-- src/
+|-- experiments/
+|-- results/
+|-- figures/
+|-- paper-wiki/
+`-- agent-wiki/
+    |-- .agents/
+    |-- .opencode/
+    |-- wiki/
+    |-- knowledge/
+    |-- sources/
+    |-- templates/
+    `-- scripts/wiki/
+```
+
+Then start OpenCode from the host root:
 
 ```bash
 opencode
@@ -31,6 +53,7 @@ If the project does not already have OpenCode config:
 
 ```bash
 cp agent-wiki/templates/project-root/opencode.json ./opencode.json
+cp agent-wiki/templates/project-root/AGENTS.md ./AGENTS.md
 ```
 
 If it already has `opencode.json`, merge these pieces manually:
@@ -66,5 +89,9 @@ git pull
 Then return to the host root and run:
 
 ```bash
+cd ..
 python agent-wiki/scripts/wiki/lint.py
 ```
+
+Continue with [Getting Started](getting-started.md) after the scaffold is in
+place.

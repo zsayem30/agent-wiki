@@ -10,16 +10,16 @@ The first version focuses on OpenCode-native use:
 - a root `opencode.json` template for host projects;
 - one bundled active agent, `wiki-curator`;
 - optional example prompts for host implementer/research/reporter agents;
-- a memory-rule injector so host agents can automatically preserve durable work
-  and submit curator handoffs;
+- a memory-rule injector so host agents can preserve durable work and submit
+  curator handoffs;
 - compact wiki and structured registries to prevent Markdown sprawl.
 
 ```{toctree}
 :maxdepth: 2
 :caption: Start Here
 
-getting-started
 installation
+getting-started
 opencode-workflow
 prompting-guide
 ```

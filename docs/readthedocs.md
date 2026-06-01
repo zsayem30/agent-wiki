@@ -6,10 +6,12 @@ Read the Docs.
 ## Files
 
 ```text
-.readthedocs.yaml
-docs/conf.py
-docs/requirements.txt
-docs/index.md
+agent-wiki/
+|-- .readthedocs.yaml
+`-- docs/
+    |-- conf.py
+    |-- requirements.txt
+    `-- index.md
 ```
 
 The build uses Sphinx with MyST Markdown, so most documentation can be written
@@ -27,6 +29,12 @@ Build HTML:
 
 ```bash
 python -m sphinx -b html docs docs/_build/html
+```
+
+Build with warnings treated as errors:
+
+```bash
+python -m sphinx -W -b html docs docs/_build/html
 ```
 
 ## Importing On Read The Docs
