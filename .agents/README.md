@@ -1,26 +1,23 @@
 # Agent Role Contracts
 
-These role contracts are harness-neutral. Use them with Codex, Claude Code,
-OpenCode, or any other agent runtime.
+`agent-wiki` bundles only one active role by default: `wiki-curator`.
 
-Default roles:
+The host project should define its own implementer, deep-research, reporter,
+or domain-specific agents in root-level OpenCode config or project instructions.
+Optional examples are available in `templates/optional-agents/`, but they are
+not active defaults.
 
-- `wiki-curator.md`
-- `implementer.md`
-- `deep-research.md`
-- `reporter.md`
+At startup, the wiki-curator should read:
 
-At startup, every agent should read:
+1. host-project `AGENTS.md`, if present;
+2. `agent-wiki/AGENTS.md`;
+3. `agent-wiki/wiki/START_HERE.md`;
+4. `agent-wiki/wiki/CURRENT_STATE.md`;
+5. `agent-wiki/wiki/ROUTING_TABLE.md`;
+6. `agent-wiki/.agents/wiki-curator.md`.
 
-1. `AGENTS.md`
-2. `wiki/START_HERE.md`
-3. `wiki/CURRENT_STATE.md`
-4. `wiki/ROUTING_TABLE.md`
-5. its role contract
-
-Then run:
+Then run, from the host project root:
 
 ```bash
-python scripts/wiki/contextualize.py --role <role>
+python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
 ```
-

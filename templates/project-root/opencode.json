@@ -1,0 +1,105 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "wiki-curator",
+  "share": "manual",
+  "autoupdate": "notify",
+  "instructions": [
+    "agent-wiki/.opencode/instructions.md"
+  ],
+  "permission": {
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+    "edit": "ask",
+    "bash": {
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "python agent-wiki/scripts/wiki/lint.py*": "allow",
+      "python agent-wiki/scripts/wiki/contextualize.py*": "allow",
+      "python agent-wiki/scripts/wiki/build_tree.py*": "allow",
+      "python agent-wiki/scripts/wiki/scan_changes.py*": "allow",
+      "python agent-wiki/scripts/wiki/ingest_source.py*": "allow",
+      "python agent-wiki/scripts/wiki/timestamp.py*": "allow"
+    },
+    "external_directory": "ask",
+    "webfetch": "allow",
+    "websearch": "allow",
+    "task": "allow"
+  },
+  "watcher": {
+    "ignore": [
+      ".git/**",
+      "node_modules/**",
+      "results/**",
+      "figures/**",
+      "**/__pycache__/**",
+      ".pytest_cache/**",
+      ".mypy_cache/**",
+      ".ruff_cache/**",
+      ".venv/**",
+      "venv/**"
+    ]
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  },
+  "agent": {
+    "wiki-curator": {
+      "description": "Maintains compact project memory in agent-wiki/wiki and structured registries in agent-wiki/knowledge.",
+      "mode": "primary",
+      "prompt": "{file:./agent-wiki/.agents/wiki-curator.md}",
+      "temperature": 0.1,
+      "color": "accent",
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "python agent-wiki/scripts/wiki/lint.py*": "allow",
+          "python agent-wiki/scripts/wiki/contextualize.py*": "allow",
+          "python agent-wiki/scripts/wiki/scan_changes.py*": "allow",
+          "python agent-wiki/scripts/wiki/build_tree.py*": "allow",
+          "python agent-wiki/scripts/wiki/rollover_logs.py*": "allow",
+          "python agent-wiki/scripts/wiki/ingest_source.py*": "allow",
+          "python agent-wiki/scripts/wiki/timestamp.py*": "allow"
+        },
+        "external_directory": "ask",
+        "task": "allow"
+      }
+    }
+  },
+  "command": {
+    "context-curator": {
+      "description": "Load the agent-wiki curator context pack.",
+      "agent": "wiki-curator",
+      "template": "Use this agent-wiki curator context pack as startup context:\n\n!`python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root . --no-git --max-lines 180`\n\nReview only routed evidence and keep agent-wiki/wiki compact."
+    },
+    "wiki-lint": {
+      "description": "Run the agent-wiki lint gate and explain failures.",
+      "agent": "wiki-curator",
+      "template": "Run and interpret the agent-wiki lint gate:\n\n!`python agent-wiki/scripts/wiki/lint.py`\n\nIf it fails, explain the exact issue and propose or apply the smallest fix."
+    },
+    "wiki-scan": {
+      "description": "Record a curator handoff from current host-project git changes.",
+      "agent": "wiki-curator",
+      "template": "Record and summarize a curator handoff:\n\n!`python agent-wiki/scripts/wiki/scan_changes.py --project-root . --summary 'OpenCode wiki-scan handoff.'`\n\nExplain which routes the curator should inspect and whether current truth may have changed."
+    },
+    "wiki-map": {
+      "description": "Regenerate agent-wiki/wiki/PROJECT_MAP.md from the host project tree.",
+      "agent": "wiki-curator",
+      "template": "Regenerate the host-project map and summarize structural changes:\n\n!`python agent-wiki/scripts/wiki/build_tree.py --project-root .`\n\nThen inspect agent-wiki/wiki/PROJECT_MAP.md if needed and note whether routing should change."
+    },
+    "wiki-rollover": {
+      "description": "Check active wiki logs for rollover.",
+      "agent": "wiki-curator",
+      "template": "Check active logs for rollover:\n\n!`python agent-wiki/scripts/wiki/rollover_logs.py --threshold 800`\n\nIf rollover is needed, summarize which logs should close or archive."
+    }
+  }
+}

@@ -5,7 +5,7 @@ sources:
     path: README.md
     kind: scaffold_doc
     status: active
-    summary: Overview of the agent-wiki scaffold.
+    summary: Overview of the curator-owned agent-wiki subfolder scaffold.
     added: TODO
     last_reviewed: TODO
 

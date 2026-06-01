@@ -4,7 +4,7 @@
 claims:
   - id: claim_scaffold_separates_memory_surfaces
     status: accepted
-    summary: The scaffold separates compact wiki truth, structured registries, raw sources, and generated results.
+    summary: The scaffold separates host-project work from curator-owned compact wiki truth, structured registries, raw sources, and generated results.
     evidence:
       - README.md
       - AGENTS.md

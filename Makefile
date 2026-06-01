@@ -1,7 +1,7 @@
-.PHONY: context lint tree scan timestamp report
+.PHONY: context lint tree scan timestamp
 
 context:
-	python scripts/wiki/contextualize.py --role implementer
+	python scripts/wiki/contextualize.py --role wiki-curator
 
 lint:
 	python scripts/wiki/lint.py
@@ -14,7 +14,3 @@ scan:
 
 timestamp:
 	python scripts/wiki/timestamp.py
-
-report:
-	python scripts/wiki/new_report.py project_status
-

@@ -14,8 +14,8 @@ except ImportError:  # pragma: no cover
     ZoneInfo = None  # type: ignore
 
 
-ROOT = Path(__file__).resolve().parents[2]
-MANIFEST = ROOT / "knowledge" / "source_manifest.yaml"
+WIKI_ROOT = Path(__file__).resolve().parents[2]
+MANIFEST = WIKI_ROOT / "knowledge" / "source_manifest.yaml"
 
 
 def now_local() -> str:
@@ -57,21 +57,31 @@ def append_manifest(rel: str, kind: str, status: str, summary: str) -> None:
     print(f"Registered {rel} as {source_id}")
 
 
+def resolve_source_path(value: str) -> Path:
+    raw = Path(value)
+    if raw.is_absolute():
+        return raw.resolve()
+    cwd_candidate = (Path.cwd() / raw).resolve()
+    if cwd_candidate.exists():
+        return cwd_candidate
+    return (WIKI_ROOT / raw).resolve()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("path", help="Source path to register.")
+    parser.add_argument("path", help="Source path to register. May be relative to host root or agent-wiki root.")
     parser.add_argument("--kind", default="source", help="plan, idea, paper, report, external, source.")
     parser.add_argument("--status", default="new", help="new, active, background, archived, superseded.")
     parser.add_argument("--summary", default="TODO", help="Short source summary.")
     args = parser.parse_args()
 
-    path = (ROOT / args.path).resolve()
+    path = resolve_source_path(args.path)
     try:
-        rel = path.relative_to(ROOT).as_posix()
+        rel = path.relative_to(WIKI_ROOT).as_posix()
     except ValueError:
-        raise SystemExit("Source must be inside the repository.")
+        raise SystemExit("Source must live inside agent-wiki/ so the curator can preserve provenance.")
     if not path.exists():
-        raise SystemExit(f"Missing source: {rel}")
+        raise SystemExit(f"Missing source: {path}")
     append_manifest(rel, args.kind, args.status, args.summary)
 
 

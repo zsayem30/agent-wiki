@@ -1,39 +1,31 @@
-# OpenCode Primary Instructions
+# Agent-Wiki OpenCode Instructions
 
-OpenCode is the primary harness for this scaffold. `AGENTS.md` remains the
-canonical project contract, and `opencode.json` wires the default OpenCode
-agents and commands.
+`agent-wiki/` is a curator-owned project memory subsystem. It is intended to be
+used as a subfolder inside a host research project.
 
-## Native OpenCode Flow
+OpenCode should normally be launched from the host project root, using the root
+`opencode.json` copied from `agent-wiki/templates/project-root/opencode.json`.
+That root config points to this file and to `agent-wiki/.agents/wiki-curator.md`.
 
-- Use `implementer` as the default primary agent for coding, debugging, tests,
-  implementation plans, and code reviews.
-- Switch to `wiki-curator` when compact project memory, registries, routes, or
-  open questions need maintenance.
-- Switch to `deep-research` for literature search, credible paper triage, paper
-  cards, and related-work memos.
-- Switch to `reporter` for dated, evidence-linked status reports and
-  paper-prep reports.
+## Role Boundary
 
-## Startup Commands
+- The bundled `wiki-curator` maintains compact durable memory in
+  `agent-wiki/wiki/` and structured state in `agent-wiki/knowledge/`.
+- Host-project agents own implementation, debugging, tests, deep research, and
+  paper/report generation.
+- Long or raw material goes in `agent-wiki/sources/` or host-project `results/`.
+- Current compact truth goes in `agent-wiki/wiki/`.
+- Structured state goes in `agent-wiki/knowledge/`.
 
-Use these OpenCode commands at the start of a role session:
+## Native Commands From Host Root
 
-- `/context-implementer`
 - `/context-curator`
-- `/context-research`
-- `/context-reporter`
-
-Use these for maintenance:
-
 - `/wiki-lint`
 - `/wiki-scan`
 - `/wiki-map`
-- `/new-report <short title>`
+- `/wiki-rollover`
 
 ## Memory Rule
 
-Long or raw material goes in `sources/` or `results/`. Compact current truth
-belongs in `wiki/`. Structured state belongs in `knowledge/`. If a claim lacks
-evidence, record it in `wiki/OPEN_QUESTIONS.md` instead of promoting it to
-current truth.
+If a claim lacks evidence, record it in `agent-wiki/wiki/OPEN_QUESTIONS.md`
+instead of promoting it to current truth.

@@ -1,21 +1,15 @@
 # /contextualize
 
-Load a role-aware context pack for this `agent-wiki` project.
+Load the agent-wiki curator context pack.
 
-Usage:
-
-```text
-/contextualize --role implementer
-/contextualize --role wiki-curator
-/contextualize --role deep-research
-/contextualize --role reporter
-```
-
-Equivalent shell command:
+From a host project root:
 
 ```bash
-python scripts/wiki/contextualize.py --role <role>
+python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
 ```
 
-After running, follow `AGENTS.md` and `.agents/<role>.md`.
+From inside the `agent-wiki/` directory while maintaining the scaffold itself:
 
+```bash
+python scripts/wiki/contextualize.py --role wiki-curator
+```

@@ -1,32 +1,21 @@
-# Claude Code Instructions
+# Claude Code Notes
 
-This project uses the `agent-wiki` scaffold.
+This directory is intended to live at `project/agent-wiki/`. OpenCode is the
+primary harness, but Claude Code can still use the curator workflow.
 
-Claude Code agents should treat `AGENTS.md` as the canonical repository
-contract, then load a role-specific context pack:
+From the host project root, load curator context with:
 
 ```bash
-python scripts/wiki/contextualize.py --role <role>
+python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
 ```
 
-Claude command shortcut:
+Then follow:
 
-```text
-/contextualize --role implementer
-/contextualize --role wiki-curator
-/contextualize --role deep-research
-/contextualize --role reporter
-```
+1. host `AGENTS.md`, if present;
+2. `agent-wiki/AGENTS.md`;
+3. `agent-wiki/wiki/START_HERE.md`;
+4. `agent-wiki/wiki/CURRENT_STATE.md`;
+5. `agent-wiki/wiki/ROUTING_TABLE.md`;
+6. `agent-wiki/.agents/wiki-curator.md`.
 
-Role contracts live in `.agents/`.
-
-Do not bulk-read `sources/` or `results/`. Route through:
-
-1. `wiki/START_HERE.md`
-2. `wiki/CURRENT_STATE.md`
-3. `wiki/ROUTING_TABLE.md`
-4. `.agents/<role>.md`
-
-If project truth changes, update the appropriate source/registry/wiki surface
-or leave a curator handoff in `knowledge/change_inbox.jsonl`.
-
+Do not bulk-read host `results/` or `agent-wiki/sources/`.

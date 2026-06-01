@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record repository changes as a curator handoff."""
+"""Record host-project changes as a curator handoff."""
 
 from __future__ import annotations
 
@@ -16,8 +16,8 @@ except ImportError:  # pragma: no cover
     ZoneInfo = None  # type: ignore
 
 
-ROOT = Path(__file__).resolve().parents[2]
-INBOX = ROOT / "knowledge" / "change_inbox.jsonl"
+WIKI_ROOT = Path(__file__).resolve().parents[2]
+INBOX = WIKI_ROOT / "knowledge" / "change_inbox.jsonl"
 
 
 def now_local() -> str:
@@ -26,10 +26,28 @@ def now_local() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
 
 
-def run_git_status() -> list[dict[str, str]]:
+def resolve_project_root(value: str | None) -> Path:
+    if value:
+        return Path(value).resolve()
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            cwd=WIKI_ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return Path(result.stdout.strip()).resolve()
+    except OSError:
+        pass
+    return WIKI_ROOT
+
+
+def run_git_status(project_root: Path) -> list[dict[str, str]]:
     result = subprocess.run(
         ["git", "status", "--short"],
-        cwd=ROOT,
+        cwd=project_root,
         text=True,
         capture_output=True,
         check=False,
@@ -46,44 +64,62 @@ def run_git_status() -> list[dict[str, str]]:
     return changed
 
 
-def suggest_routes(changed: list[dict[str, str]]) -> list[str]:
+def wiki_prefix(project_root: Path) -> str:
+    try:
+        return WIKI_ROOT.relative_to(project_root).as_posix().strip("/")
+    except ValueError:
+        return ""
+
+
+def strip_wiki_prefix(path: str, prefix: str) -> str:
+    if prefix and path.startswith(prefix + "/"):
+        return path[len(prefix) + 1 :]
+    return path
+
+
+def suggest_routes(changed: list[dict[str, str]], project_root: Path) -> list[str]:
     routes: set[str] = set()
+    prefix = wiki_prefix(project_root)
     for item in changed:
         path = item["path"]
-        if path.startswith("sources/papers/"):
-            routes.add("wiki/topics/literature.md")
-            routes.add("knowledge/paper_registry.yaml")
-        elif path.startswith("sources/plans/"):
-            routes.add("wiki/plans/active_plan.md")
-        elif path.startswith("sources/ideas/"):
-            routes.add("wiki/topics/project_overview.md")
-            routes.add("wiki/OPEN_QUESTIONS.md")
-        elif path.startswith("sources/reports/"):
-            routes.add("wiki/reports/REPORT_INDEX.md")
-            routes.add("knowledge/report_registry.yaml")
-        elif path.startswith("results/"):
-            routes.add("knowledge/experiment_registry.yaml")
-        elif path.startswith("wiki/"):
-            routes.add("wiki/CURRENT_STATE.md")
-        elif path.startswith("knowledge/"):
-            routes.add("wiki/ROUTING_TABLE.md")
-        elif path.endswith(".py") or path.startswith(("src/", "scripts/", "experiments/")):
-            routes.add("wiki/PROJECT_MAP.md")
-            routes.add("wiki/plans/active_plan.md")
+        local = strip_wiki_prefix(path, prefix)
+        in_wiki = local != path or not prefix
+        if in_wiki and local.startswith("sources/papers/"):
+            routes.add("agent-wiki/wiki/topics/literature.md")
+            routes.add("agent-wiki/knowledge/paper_registry.yaml")
+        elif in_wiki and local.startswith("sources/plans/"):
+            routes.add("agent-wiki/wiki/plans/active_plan.md")
+        elif in_wiki and local.startswith("sources/ideas/"):
+            routes.add("agent-wiki/wiki/topics/project_overview.md")
+            routes.add("agent-wiki/wiki/OPEN_QUESTIONS.md")
+        elif in_wiki and local.startswith("sources/reports/"):
+            routes.add("agent-wiki/wiki/reports/REPORT_INDEX.md")
+            routes.add("agent-wiki/knowledge/report_registry.yaml")
+        elif in_wiki and local.startswith("wiki/"):
+            routes.add("agent-wiki/wiki/CURRENT_STATE.md")
+        elif in_wiki and local.startswith("knowledge/"):
+            routes.add("agent-wiki/wiki/ROUTING_TABLE.md")
+        elif path.startswith(("results/", "figures/")):
+            routes.add("agent-wiki/knowledge/experiment_registry.yaml")
+        elif path.endswith((".py", ".rs", ".cpp", ".c", ".h", ".ts", ".tsx", ".js")) or path.startswith(("src/", "scripts/", "experiments/")):
+            routes.add("agent-wiki/wiki/PROJECT_MAP.md")
+            routes.add("agent-wiki/wiki/plans/active_plan.md")
     if not routes:
-        routes.add("wiki/CURRENT_STATE.md")
+        routes.add("agent-wiki/wiki/CURRENT_STATE.md")
     return sorted(routes)
 
 
-def make_entry(summary: str, kind: str) -> dict[str, object]:
-    changed = run_git_status()
+def make_entry(summary: str, kind: str, project_root: Path) -> dict[str, object]:
+    changed = run_git_status(project_root)
     return {
         "timestamp": now_local(),
         "timestamp_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "kind": kind,
         "summary": summary,
+        "project_root": str(project_root),
+        "agent_wiki_root": str(WIKI_ROOT),
         "changed": changed,
-        "suggested_routes": suggest_routes(changed),
+        "suggested_routes": suggest_routes(changed, project_root),
         "current_truth_changed": "unknown",
         "open_questions": [],
     }
@@ -95,8 +131,8 @@ def append_entry(entry: dict[str, object]) -> None:
         f.write(json.dumps(entry, sort_keys=True) + "\n")
 
 
-def once(args: argparse.Namespace) -> dict[str, object]:
-    entry = make_entry(args.summary, args.kind)
+def once(args: argparse.Namespace, project_root: Path) -> dict[str, object]:
+    entry = make_entry(args.summary, args.kind, project_root)
     if not args.dry_run:
         append_entry(entry)
     return entry
@@ -104,6 +140,7 @@ def once(args: argparse.Namespace) -> dict[str, object]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--project-root", default="", help="Host project root. Use '.' from host root.")
     parser.add_argument("--summary", default="Manual scan for curator review.")
     parser.add_argument("--kind", default="manual_scan")
     parser.add_argument("--dry-run", action="store_true")
@@ -111,19 +148,21 @@ def main() -> None:
     parser.add_argument("--interval", type=float, default=15.0)
     args = parser.parse_args()
 
+    project_root = resolve_project_root(args.project_root or None)
+
     if not args.watch:
-        entry = once(args)
+        entry = once(args, project_root)
         print(json.dumps(entry, indent=2, sort_keys=True))
         return
 
     previous = None
-    print(f"Watching for changes every {args.interval:g}s. Press Ctrl-C to stop.")
+    print(f"Watching {project_root} for changes every {args.interval:g}s. Press Ctrl-C to stop.")
     try:
         while True:
-            changed = run_git_status()
+            changed = run_git_status(project_root)
             signature = json.dumps(changed, sort_keys=True)
             if changed and signature != previous:
-                entry = make_entry(args.summary, args.kind)
+                entry = make_entry(args.summary, args.kind, project_root)
                 if not args.dry_run:
                     append_entry(entry)
                 print(json.dumps(entry, indent=2, sort_keys=True))
@@ -135,4 +174,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

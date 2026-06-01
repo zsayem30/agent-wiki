@@ -7,7 +7,7 @@ into truth.
 
 | ID | Question | Status | Owner | Evidence | Next Step |
 |---|---|---|---|---|---|
-| OQ-001 | What is the first concrete project goal? | open | user | `sources/inbox/` | Add starting idea or plan. |
+| OQ-001 | What is the first concrete project goal? | open | user | `agent-wiki/sources/inbox/` | Add starting idea or plan. |
 
 ## Resolved Questions
 

@@ -1,28 +1,11 @@
 # Contextualize Skill
 
-Use this skill when a Claude Code agent starts work in an `agent-wiki`
-repository or switches roles.
+Use this skill when a Claude Code agent needs the agent-wiki curator context.
 
-Run:
+From a host project root:
 
 ```bash
-python scripts/wiki/contextualize.py --role <role>
+python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
 ```
 
-Valid roles:
-
-- `implementer`
-- `wiki-curator`
-- `deep-research`
-- `reporter`
-
-Then follow:
-
-1. `AGENTS.md`
-2. `wiki/START_HERE.md`
-3. `wiki/CURRENT_STATE.md`
-4. `wiki/ROUTING_TABLE.md`
-5. `.agents/<role>.md`
-
-Do not bulk-read `sources/` or `results/`.
-
+Then follow `agent-wiki/AGENTS.md` and `agent-wiki/.agents/wiki-curator.md`.
