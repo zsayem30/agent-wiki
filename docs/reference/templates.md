@@ -41,7 +41,7 @@ experiments, and paper goals.
 |---|---|
 | `claim.yaml` | Durable claim entries. |
 | `run_card.yaml` | Experiment/run cards. |
-| `handoff.json` | Manual curator handoff shape. |
+| `handoff.json` | Manual Git-aware curator handoff shape with evidence, verification, truth impact, routes, and curator status. |
 | `decision.md` | ADR-style decisions with reopen gates. |
 | `log_entry.md` | Newest-first active log entries. |
 | `topic.md` | Compact topic hubs. |

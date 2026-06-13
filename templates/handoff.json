@@ -1,11 +1,25 @@
 {
+  "id": "handoff_YYYYMMDD_HHMMSS_hash",
   "timestamp": "TODO",
-  "kind": "manual_handoff",
+  "timestamp_utc": "TODO",
+  "kind": "manual_scan",
   "summary": "TODO",
+  "project_root": "TODO",
+  "agent_wiki_root": "TODO",
+  "git": {
+    "available": true,
+    "branch": "TODO",
+    "head": "TODO",
+    "commit": null,
+    "is_dirty": true,
+    "changed": [],
+    "diff_stat": []
+  },
   "changed": [],
   "evidence": [],
+  "verification": [],
   "suggested_routes": [],
   "current_truth_changed": "unknown",
-  "open_questions": []
+  "open_questions": [],
+  "curator_status": "pending"
 }
-

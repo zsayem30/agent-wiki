@@ -78,23 +78,27 @@ Start OpenCode from the host project root:
 opencode
 ```
 
-The root template defines only one bundled agent:
+The root template configures two primary agents:
 
 | Agent | Owns |
 |---|---|
+| `build` | Default OpenCode implementation/debugging/review work with agent-wiki context and host-agent memory rules. |
 | `wiki-curator` | Compact memory in `agent-wiki/wiki/` and structured registries in `agent-wiki/knowledge/`. |
 
 Use native commands:
 
 | Command | Purpose |
 |---|---|
+| `/contextualize` | Load compact implementer context for the current host-agent task. |
 | `/context-curator` | Load the curator context pack. |
 | `/wiki-lint` | Run the wiki lint gate. |
 | `/wiki-scan` | Record a handoff from current host-project changes. |
+| `/wiki-review-next` | Load the next pending handoff for curator review. |
+| `/wiki-watch` | Show the latest handoff wake-up event and watcher instructions. |
 | `/wiki-map` | Regenerate `agent-wiki/wiki/PROJECT_MAP.md` from the host tree. |
 | `/wiki-rollover` | Check active logs for rollover. |
 
-Host projects should define their own implementer, deep-research, reporter, or
+Host projects can define additional implementer, deep-research, reporter, or
 domain-specific agents in the root `opencode.json`. Optional example prompts
 are available in `agent-wiki/templates/optional-agents/`.
 
@@ -131,7 +135,8 @@ the user has not already specified memory behavior.
 ```text
 Host implementer / researcher / reporter agents do work
   -> durable material goes to agent-wiki/sources/ or host results/
-  -> /wiki-scan records a handoff
+  -> /wiki-scan records a Git-aware handoff with evidence and verification
+  -> /wiki-watch or /wiki-review-next helps a curator notice pending work
   -> wiki-curator distills compact truth into agent-wiki/wiki/ and knowledge/
   -> /wiki-lint keeps memory clean
 ```
@@ -201,7 +206,9 @@ From the host project root:
 
 ```bash
 python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
-python agent-wiki/scripts/wiki/scan_changes.py --project-root .
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown --evidence <path-or-note>
+python agent-wiki/scripts/wiki/handoff_queue.py --project-root . next
+python agent-wiki/scripts/wiki/watch_handoffs.py --project-root . --once
 python agent-wiki/scripts/wiki/build_tree.py --project-root .
 python agent-wiki/scripts/wiki/lint.py
 ```

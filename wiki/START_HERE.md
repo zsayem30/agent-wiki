@@ -5,14 +5,21 @@ long source documents or host-project results.
 
 ## Project Status
 
-This `agent-wiki/` directory is a curator-owned memory subsystem. Replace this
-starter text with the host project's summary once the first plan or idea is
-accepted.
+This project is the `agent-wiki` memory subsystem itself. The current focus is
+improving performance and reliability through more auditable handoffs, safer
+curator wakeups, and deterministic semantic guardrails for lower-cost models.
+
+The accepted source plan is distilled in `agent-wiki/wiki/plans/active_plan.md`.
+The first implementation pass for Git-aware scans, event wakeups, queue helpers,
+and semantic lint warnings is in place. Treat strict hard-error gates, tmux
+prompt injection, and a curator auditor as unresolved unless later evidence
+promotes them.
 
 Current project truth lives in:
 
 - `agent-wiki/wiki/CURRENT_STATE.md`
 - `agent-wiki/wiki/topics/project_overview.md`
+- `agent-wiki/wiki/topics/method.md`
 - `agent-wiki/wiki/plans/active_plan.md`
 - `agent-wiki/knowledge/project_graph.yaml`
 
@@ -23,8 +30,13 @@ root `opencode.json` should come from
 `agent-wiki/templates/project-root/opencode.json` and point to the bundled
 `wiki-curator` agent.
 
+The template also configures the built-in `build` agent as a host implementer
+with `/contextualize` context refresh and agent-wiki host-agent memory rules by
+default.
+
 Useful commands:
 
+- `/contextualize`
 - `/context-curator`
 - `/wiki-scan`
 - `/wiki-lint`

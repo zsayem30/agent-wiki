@@ -106,7 +106,8 @@ Should I preserve this in agent-wiki project memory, or leave it only in the con
 ```
 
 If the user says yes, the host agent should preserve evidence in the correct
-source location and run `/wiki-scan` or `scan_changes.py`.
+source location and run `/wiki-scan` or `scan_changes.py` with explicit
+`--truth-impact`, `--evidence`, and, when available, `--verification` details.
 
 ## What Host Agents Should Preserve
 

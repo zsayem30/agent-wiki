@@ -51,6 +51,17 @@ For every source document, report, run card, code change, or handoff, decide:
 - Prefer updating existing routes before creating new wiki pages.
 - If a log exceeds the threshold, split or close it.
 
+## Truth Promotion Checklist
+
+Before promoting any statement to current truth, verify:
+
+1. What exact evidence supports it?
+2. Is it completed, verified, active, planned, attempted, failed, or superseded?
+3. Has the evidence been opened, or is it only referenced by a handoff?
+4. Does the claim belong in `CURRENT_STATE.md`, a topic hub, a registry, or `OPEN_QUESTIONS.md`?
+5. Is there any uncertainty that should stay explicit?
+6. Did lint pass after edits?
+
 ## Required Verification
 
 Before handing off:
@@ -73,4 +84,3 @@ When reporting back, say:
 - what evidence supports it;
 - what remains unresolved;
 - whether lint passed.
-

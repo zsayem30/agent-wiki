@@ -21,6 +21,8 @@
       "python agent-wiki/scripts/wiki/contextualize.py*": "allow",
       "python agent-wiki/scripts/wiki/build_tree.py*": "allow",
       "python agent-wiki/scripts/wiki/scan_changes.py*": "allow",
+      "python agent-wiki/scripts/wiki/handoff_queue.py*": "allow",
+      "python agent-wiki/scripts/wiki/watch_handoffs.py*": "allow",
       "python agent-wiki/scripts/wiki/ingest_source.py*": "allow",
       "python agent-wiki/scripts/wiki/timestamp.py*": "allow",
       "python agent-wiki/scripts/wiki/inject_host_agent_rules.py*": "allow",
@@ -51,6 +53,12 @@
     "reserved": 10000
   },
   "agent": {
+    "build": {
+      "description": "Default OpenCode build agent configured as a host-project implementer with agent-wiki context and memory handoff rules.",
+      "mode": "primary",
+      "prompt": "You are the default OpenCode build agent for the host project. You implement, debug, test, and review host-project code.\n\nAt the start of meaningful work, refresh compact project context with `/contextualize` or by running:\n\npython agent-wiki/scripts/wiki/contextualize.py --role implementer --project-root . --max-lines 180\n\nUse `agent-wiki/wiki/ROUTING_TABLE.md` to choose the smallest useful context before opening long sources. Do not directly promote unverified claims into current wiki truth. After durable implementation, debugging, research, analysis, or reporting, follow the host-agent memory rules below.\n\n{file:./agent-wiki/templates/optional-agents/implementer.md}\n\n{file:./agent-wiki/.opencode/host-agent-memory-rules.md}",
+      "color": "green"
+    },
     "wiki-curator": {
       "description": "Maintains compact project memory in agent-wiki/wiki and structured registries in agent-wiki/knowledge.",
       "mode": "primary",
@@ -67,6 +75,8 @@
           "python agent-wiki/scripts/wiki/lint.py*": "allow",
           "python agent-wiki/scripts/wiki/contextualize.py*": "allow",
           "python agent-wiki/scripts/wiki/scan_changes.py*": "allow",
+          "python agent-wiki/scripts/wiki/handoff_queue.py*": "allow",
+          "python agent-wiki/scripts/wiki/watch_handoffs.py*": "allow",
           "python agent-wiki/scripts/wiki/build_tree.py*": "allow",
           "python agent-wiki/scripts/wiki/rollover_logs.py*": "allow",
           "python agent-wiki/scripts/wiki/ingest_source.py*": "allow",
@@ -80,6 +90,11 @@
     }
   },
   "command": {
+    "contextualize": {
+      "description": "Load compact agent-wiki context for the current host-agent task.",
+      "agent": "build",
+      "template": "Use this compact agent-wiki context pack for the current host-agent task:\n\n!`python agent-wiki/scripts/wiki/contextualize.py --role implementer --project-root . --max-lines 180 $ARGUMENTS`\n\nRestate the user's task in the current project context, choose the smallest relevant route from ROUTING_TABLE.md, and open only the files needed for that route."
+    },
     "context-curator": {
       "description": "Load the agent-wiki curator context pack.",
       "agent": "wiki-curator",
@@ -93,7 +108,17 @@
     "wiki-scan": {
       "description": "Record a curator handoff from current host-project git changes.",
       "agent": "wiki-curator",
-      "template": "Record and summarize a curator handoff:\n\n!`python agent-wiki/scripts/wiki/scan_changes.py --project-root . --summary 'OpenCode wiki-scan handoff.'`\n\nExplain which routes the curator should inspect and whether current truth may have changed."
+      "template": "Record and summarize a Git-aware curator handoff. Pass optional args through, for example --truth-impact no --evidence path --verification 'pytest passed'.\n\n!`python agent-wiki/scripts/wiki/scan_changes.py --project-root . --summary 'OpenCode wiki-scan handoff.' $ARGUMENTS`\n\nExplain which routes the curator should inspect, what evidence or verification was recorded, and whether current truth may have changed."
+    },
+    "wiki-review-next": {
+      "description": "Load the next pending curator handoff.",
+      "agent": "wiki-curator",
+      "template": "Load the next pending agent-wiki handoff for curator review:\n\n!`python agent-wiki/scripts/wiki/handoff_queue.py --project-root . next`\n\nInspect only the routed evidence needed to decide whether compact truth or registries should change. Leave uncertainty in OPEN_QUESTIONS.md."
+    },
+    "wiki-watch": {
+      "description": "Show the latest handoff wake-up event and watcher instructions.",
+      "agent": "wiki-curator",
+      "template": "Show the latest safe handoff wake-up event:\n\n!`python agent-wiki/scripts/wiki/watch_handoffs.py --project-root . --once --no-bell`\n\nFor a persistent watcher in a separate terminal, run: python agent-wiki/scripts/wiki/watch_handoffs.py --project-root ."
     },
     "wiki-map": {
       "description": "Regenerate agent-wiki/wiki/PROJECT_MAP.md from the host project tree.",

@@ -17,14 +17,20 @@ project-name/
   agent-wiki/
 ```
 
-The root `opencode.json` defines only the `wiki-curator` agent. Project-specific
-implementer, research, or reporting agents should live in the host project, not
-inside `agent-wiki/`.
+The root `opencode.json` configures the built-in OpenCode `build` agent as a
+host implementer and defines the `wiki-curator` agent. Project-specific research,
+reporting, or domain agents should live in the host project, not inside
+`agent-wiki/`.
+
+Use `/contextualize` in Build mode to refresh compact implementer context from
+`agent-wiki/wiki/START_HERE.md`, `agent-wiki/wiki/CURRENT_STATE.md`, and
+`agent-wiki/wiki/ROUTING_TABLE.md`.
 
 ## Host Agent Memory Rules
 
-After defining host agents in root `opencode.json`, inject agent-wiki memory
-rules into the agents that should contribute to project memory.
+The template already includes agent-wiki memory rules in the `build` agent. After
+defining additional host agents in root `opencode.json`, inject the rules into
+the agents that should contribute to project memory.
 
 Default: all non-curator host agents.
 

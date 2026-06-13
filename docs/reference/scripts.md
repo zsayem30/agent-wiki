@@ -12,13 +12,39 @@ python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-ro
 
 ## scan_changes.py
 
-Record a curator handoff from host-project Git changes:
+Record a Git-aware curator handoff from host-project changes:
 
 ```bash
-python agent-wiki/scripts/wiki/scan_changes.py --project-root .
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown --evidence <path-or-note>
 ```
 
-Use `--dry-run` to inspect without writing.
+Use `--dry-run` to inspect without writing. Useful metadata arguments include
+`--commit`, `--verification`, `--suggested-route`, `--open-question`, and
+`--no-event`.
+
+## handoff_queue.py
+
+Inspect or acknowledge queued handoffs:
+
+```bash
+python agent-wiki/scripts/wiki/handoff_queue.py --project-root . next
+python agent-wiki/scripts/wiki/handoff_queue.py --project-root . list
+python agent-wiki/scripts/wiki/handoff_queue.py --project-root . ack <handoff_id> --status curated
+```
+
+Acknowledgements append status events instead of rewriting old handoff entries.
+
+## watch_handoffs.py
+
+Show or watch safe handoff wake-up events:
+
+```bash
+python agent-wiki/scripts/wiki/watch_handoffs.py --project-root . --once
+python agent-wiki/scripts/wiki/watch_handoffs.py --project-root . --notify macos
+```
+
+The watcher prints summaries, can ring the terminal bell, and does not inject
+text into another terminal by default.
 
 ## ingest_source.py
 

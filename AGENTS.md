@@ -133,6 +133,7 @@ The handoff should make clear:
 
 - what changed;
 - where evidence lives;
+- what verification ran, if any;
 - whether current project truth changed;
 - which topic hub or registry may need an update;
 - what remains uncertain.

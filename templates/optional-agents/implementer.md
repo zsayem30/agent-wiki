@@ -58,15 +58,15 @@ meaningful checks and state what was not run.
 After meaningful work:
 
 ```bash
-python scripts/wiki/scan_changes.py
+python scripts/wiki/scan_changes.py --truth-impact unknown --evidence <path-or-note>
 ```
 
 Tell the curator:
 
 - code files changed;
-- tests run;
+- evidence paths;
+- tests or verification run;
 - result paths;
 - source reports created;
 - claims that may need updating;
 - uncertainties.
-

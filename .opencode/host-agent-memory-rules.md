@@ -49,13 +49,18 @@ Use this storage rule:
 Then run or ask to run from the host project root:
 
 ```bash
-python agent-wiki/scripts/wiki/scan_changes.py --project-root .
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown --evidence <path-or-note>
 ```
+
+Use repeated `--evidence`, `--verification`, `--suggested-route`, and
+`--open-question` arguments when useful. Set `--truth-impact yes`, `no`, or
+`unknown` explicitly instead of leaving the curator to infer it.
 
 Summarize for the curator:
 
 - what changed;
 - where evidence lives;
+- what verification was run, if any;
 - whether current truth may need updating;
 - which topic hub or registry may need review;
 - what remains uncertain.

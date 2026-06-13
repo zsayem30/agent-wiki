@@ -3,24 +3,97 @@
 # evidence relationships change.
 
 project:
-  name: TODO
-  status: starter
-  summary: "Replace with the project summary."
+  name: agent-wiki performance and reliability
+  status: implemented_hardening
+  summary: Improve agent-wiki handoffs, curator wakeups, and semantic safeguards while preserving a lightweight evidence-first workflow; first implementation pass is complete and under hardening.
 
 nodes:
   - id: project_main
     type: project
-    label: Main Project
+    label: Agent-Wiki Performance And Reliability
     status: active
     wiki: wiki/topics/project_overview.md
+  - id: plan_git_handoffs_wakeups_gates
+    type: plan
+    label: Git-backed handoffs, curator wakeups, and semantic gates
+    status: implemented_hardening
+    wiki: wiki/plans/active_plan.md
+    source: sources/plans/2026-06-06_git_backed_handoffs_curator_wakeup_semantic_gates.md
+  - id: component_handoff_queue
+    type: component
+    label: Structured handoff queue
+    status: implemented
+    path: knowledge/change_inbox.jsonl
+  - id: component_scan_changes
+    type: component
+    label: Git-aware change scanning
+    status: implemented
+    path: scripts/wiki/scan_changes.py
+  - id: component_wakeup_events
+    type: component
+    label: Curator wake-up events
+    status: implemented
+    path: knowledge/events.jsonl
+  - id: component_wakeup_watcher
+    type: component
+    label: Safe handoff watcher
+    status: implemented
+    path: scripts/wiki/watch_handoffs.py
+  - id: component_handoff_queue_helper
+    type: component
+    label: Handoff queue helper
+    status: implemented
+    path: scripts/wiki/handoff_queue.py
+  - id: component_semantic_gates
+    type: component
+    label: Semantic reliability gates
+    status: implemented_warnings
+    path: scripts/wiki/lint.py
+  - id: component_opencode_build_context
+    type: component
+    label: OpenCode build-agent context and memory rules
+    status: implemented
+    path: templates/project-root/opencode.json
 
 edges:
   - from: project_main
-    to: active_plan
+    to: plan_git_handoffs_wakeups_gates
     type: guided_by
+  - from: plan_git_handoffs_wakeups_gates
+    to: component_handoff_queue
+    type: extends
+  - from: plan_git_handoffs_wakeups_gates
+    to: component_scan_changes
+    type: implements_through
+  - from: plan_git_handoffs_wakeups_gates
+    to: component_wakeup_events
+    type: implements_through
+  - from: plan_git_handoffs_wakeups_gates
+    to: component_wakeup_watcher
+    type: implements_through
+  - from: plan_git_handoffs_wakeups_gates
+    to: component_handoff_queue_helper
+    type: implements_through
+  - from: plan_git_handoffs_wakeups_gates
+    to: component_semantic_gates
+    type: implements_through
+  - from: project_main
+    to: component_opencode_build_context
+    type: integrates
 
 references:
   - id: active_plan
     type: plan
     path: wiki/plans/active_plan.md
-
+  - id: method_topic
+    type: topic
+    path: wiki/topics/method.md
+  - id: source_plan_git_handoffs_wakeups_gates
+    type: source_plan
+    path: sources/plans/2026-06-06_git_backed_handoffs_curator_wakeup_semantic_gates.md
+  - id: implementation_handoff_20260606_205931
+    type: handoff
+    path: knowledge/change_inbox.jsonl
+  - id: implementation_handoff_20260606_233526
+    type: handoff
+    path: knowledge/change_inbox.jsonl

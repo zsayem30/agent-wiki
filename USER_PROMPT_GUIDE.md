@@ -92,8 +92,9 @@ needs. After durable work, ask them:
 
 ```text
 Please leave an agent-wiki curator handoff. Run /wiki-scan or
-python agent-wiki/scripts/wiki/scan_changes.py --project-root . and summarize
-what changed, where evidence lives, and whether current truth may need updating.
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown
+--evidence <path-or-note> and summarize what changed, where evidence lives,
+what verification ran, and whether current truth may need updating.
 ```
 
 Then ask the curator:
@@ -163,6 +164,8 @@ From OpenCode:
 
 ```text
 /wiki-scan
+/wiki-review-next
+/wiki-watch
 /wiki-lint
 /wiki-map
 /wiki-rollover
@@ -171,7 +174,9 @@ From OpenCode:
 From the host shell:
 
 ```bash
-python agent-wiki/scripts/wiki/scan_changes.py --project-root .
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown --evidence <path-or-note>
+python agent-wiki/scripts/wiki/handoff_queue.py --project-root . next
+python agent-wiki/scripts/wiki/watch_handoffs.py --project-root . --once
 python agent-wiki/scripts/wiki/lint.py
 python agent-wiki/scripts/wiki/build_tree.py --project-root .
 ```

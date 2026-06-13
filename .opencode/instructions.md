@@ -19,9 +19,12 @@ That root config points to this file and to `agent-wiki/.agents/wiki-curator.md`
 
 ## Native Commands From Host Root
 
+- `/contextualize`
 - `/context-curator`
 - `/wiki-lint`
 - `/wiki-scan`
+- `/wiki-review-next`
+- `/wiki-watch`
 - `/wiki-map`
 - `/wiki-rollover`
 - `/wiki-inject-rules`
@@ -36,6 +39,9 @@ instead of promoting it to current truth.
 
 Host-project agents that should contribute to project memory must include
 `agent-wiki/.opencode/host-agent-memory-rules.md` in their prompt.
+
+The project-root template configures the built-in OpenCode `build` agent as a
+host implementer and includes these rules by default.
 
 Default injection applies to all non-curator host agents:
 

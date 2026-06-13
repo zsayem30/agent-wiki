@@ -29,8 +29,12 @@ project `results/`, then let the curator distill it.
 After durable work, run from the project root:
 
 ```bash
-python agent-wiki/scripts/wiki/scan_changes.py --project-root .
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown --evidence <path-or-note>
 ```
+
+Use `--truth-impact yes`, `no`, or `unknown` explicitly. Add repeated
+`--evidence`, `--verification`, `--suggested-route`, and `--open-question`
+arguments when useful.
 
 Then ask the `wiki-curator` to update compact truth only if evidence supports
 it.

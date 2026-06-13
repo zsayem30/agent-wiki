@@ -17,14 +17,17 @@ project-root/
 The template points OpenCode to the curator prompt and project-memory
 instructions inside `agent-wiki/`.
 
-## Curator Commands
+## Native Commands
 
 Use these commands inside OpenCode:
 
 | Command | Purpose |
 |---|---|
+| `/contextualize` | Load compact implementer context for the current host-agent task. |
 | `/context-curator` | Load the wiki-curator context pack. |
-| `/wiki-scan` | Record a handoff from current host-project changes. |
+| `/wiki-scan` | Record a Git-aware handoff from current host-project changes. |
+| `/wiki-review-next` | Load the next pending handoff for curator review. |
+| `/wiki-watch` | Show the latest handoff wake-up event and watcher instructions. |
 | `/wiki-lint` | Run the wiki lint gate. |
 | `/wiki-map` | Regenerate the host project map. |
 | `/wiki-rollover` | Check whether active logs should split or close. |
@@ -41,6 +44,22 @@ Terminal 2: wiki-curator
 ```
 
 The host agent does the work. The curator maintains compact memory.
+
+The project-root template configures the built-in OpenCode `build` agent as the
+default host implementer. `build` includes the host-agent memory rules by
+default and can refresh compact context with `/contextualize`.
+
+## Load Host-Agent Context
+
+```text
+/contextualize
+```
+
+Equivalent terminal command:
+
+```bash
+python agent-wiki/scripts/wiki/contextualize.py --role implementer --project-root . --max-lines 180
+```
 
 ## Load Curator Context
 
@@ -97,8 +116,9 @@ state, the host agent should run:
 Equivalent terminal command:
 
 ```bash
-python agent-wiki/scripts/wiki/scan_changes.py --project-root . --summary "Short handoff summary."
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --summary "Short handoff summary." --truth-impact unknown --evidence <path-or-note>
 ```
 
-The curator then reviews `agent-wiki/knowledge/change_inbox.jsonl` and updates
-only the compact surfaces that changed.
+The scanner appends to `agent-wiki/knowledge/change_inbox.jsonl` and emits a
+safe `handoff_created` event. The curator can run `/wiki-review-next` to inspect
+the next pending handoff, then updates only the compact surfaces that changed.

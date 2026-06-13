@@ -65,7 +65,7 @@ Store long research memos in `sources/reports/`. Store paper notes in
 After research:
 
 ```bash
-python scripts/wiki/scan_changes.py
+python scripts/wiki/scan_changes.py --truth-impact unknown --evidence <path-or-note>
 ```
 
 Tell the curator:
@@ -73,6 +73,6 @@ Tell the curator:
 - which papers are foundational;
 - which are direct competitors;
 - which are related-work citations only;
+- where evidence and notes live;
 - what claims or open questions should be added;
 - what remains uncertain.
-

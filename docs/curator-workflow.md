@@ -19,6 +19,7 @@ The curator owns these surfaces:
 | `knowledge/project_graph.yaml` | track relationships among ideas, claims, runs, and docs |
 | `knowledge/*_registry.yaml` | keep claims, experiments, papers, ideas, and reports searchable |
 | `knowledge/change_inbox.jsonl` | consume host-agent handoffs |
+| `knowledge/events.jsonl` | inspect handoff wake-up and status events |
 
 The curator does not own host implementation, experiment execution, or paper
 writing unless the user explicitly asks it to leave its role.
@@ -35,7 +36,7 @@ sequenceDiagram
 
     User->>Curator: /context-curator
     Curator->>Route: read START_HERE, CURRENT_STATE, ROUTING_TABLE
-    Curator->>Inbox: inspect pending handoffs if task asks for curation
+    Curator->>Inbox: run /wiki-review-next or inspect pending handoffs if task asks for curation
     Curator->>Wiki: identify relevant topic hubs only
     Curator-->>User: summarize state, routes, pending curation work
 ```
@@ -76,10 +77,11 @@ A good handoff review asks:
 
 1. What changed?
 2. What evidence supports the change?
-3. Is the change current truth, historical provenance, or only a source index?
-4. Which future task should be routed to this information?
-5. Did any previous claim become stale or superseded?
-6. Does ambiguity need an open question?
+3. What verification was run, if any?
+4. Is the change current truth, historical provenance, or only a source index?
+5. Which future task should be routed to this information?
+6. Did any previous claim become stale or superseded?
+7. Does ambiguity need an open question?
 
 ## Curation Decision Rules
 

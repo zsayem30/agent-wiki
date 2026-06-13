@@ -71,9 +71,9 @@ card, result path, paper card, or claim registry entry.
 After writing a report:
 
 ```bash
-python scripts/wiki/scan_changes.py
+python scripts/wiki/scan_changes.py --truth-impact unknown --evidence <path-or-note>
 ```
 
-Tell the curator whether the report changes any current truth, claims, routes,
-or open questions.
-
+Tell the curator what evidence supports the report, what verification was done,
+and whether the report changes any current truth, claims, routes, or open
+questions.
