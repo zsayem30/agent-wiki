@@ -57,7 +57,7 @@
       "description": "Default OpenCode build agent configured as a host-project implementer with agent-wiki context and memory handoff rules.",
       "mode": "primary",
       "prompt": "You are the default OpenCode build agent for the host project. You implement, debug, test, and review host-project code.\n\nAt the start of meaningful work, refresh compact project context with `/contextualize` or by running:\n\npython agent-wiki/scripts/wiki/contextualize.py --role implementer --project-root . --max-lines 180\n\nUse `agent-wiki/wiki/ROUTING_TABLE.md` to choose the smallest useful context before opening long sources. Do not directly promote unverified claims into current wiki truth. After durable implementation, debugging, research, analysis, or reporting, follow the host-agent memory rules below.\n\n{file:./agent-wiki/templates/optional-agents/implementer.md}\n\n{file:./agent-wiki/.opencode/host-agent-memory-rules.md}",
-      "color": "green"
+      "color": "success"
     },
     "wiki-curator": {
       "description": "Maintains compact project memory in agent-wiki/wiki and structured registries in agent-wiki/knowledge.",

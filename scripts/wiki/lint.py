@@ -44,6 +44,8 @@ REQUIRED_PATHS = [
 HANDOFF_TRUTH_VALUES = {"yes", "no", "unknown"}
 HANDOFF_CURATOR_STATUSES = {"pending", "acknowledged", "curated", "deferred", "rejected"}
 STATUS_NEEDS_EVIDENCE = {"completed", "verified"}
+OPENCODE_AGENT_COLORS = {"primary", "secondary", "accent", "success", "warning", "error", "info"}
+HEX_COLOR_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 IGNORE_PARTS = {
@@ -170,9 +172,32 @@ def check_json_files(errors: list[str]) -> None:
         if not path.exists():
             continue
         try:
-            json.loads(path.read_text(encoding="utf-8"))
+            data = json.loads(path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as exc:
             errors.append(f"Invalid JSON {rel}: {exc}")
+            continue
+        check_opencode_template(rel, data, errors)
+
+
+def check_opencode_template(rel: str, data: object, errors: list[str]) -> None:
+    if not isinstance(data, dict):
+        errors.append(f"Invalid OpenCode template {rel}: expected top-level object.")
+        return
+    agents = data.get("agent")
+    if not isinstance(agents, dict):
+        return
+    for name, agent in agents.items():
+        if not isinstance(agent, dict) or "color" not in agent:
+            continue
+        color = agent.get("color")
+        if not isinstance(color, str):
+            errors.append(f"Invalid OpenCode agent color in {rel}: agent.{name}.color should be a string.")
+            continue
+        if color not in OPENCODE_AGENT_COLORS and not HEX_COLOR_RE.match(color):
+            errors.append(
+                f"Invalid OpenCode agent color in {rel}: agent.{name}.color={color!r}; "
+                f"use one of {sorted(OPENCODE_AGENT_COLORS)} or a #RRGGBB value."
+            )
 
 
 def check_size(warnings: list[str]) -> None:
