@@ -1,9 +1,9 @@
 # Research ideas, variants, and branches.
 
 ideas:
-  - id: idea_agent_wiki_performance
-    status: active_hardening
-    summary: Improve agent-wiki performance and reliability with Git-backed handoffs, curator wakeups, and semantic safeguards.
-    source: sources/plans/2026-06-06_git_backed_handoffs_curator_wakeup_semantic_gates.md
+  - id: idea_main
+    status: placeholder
+    summary: Replace with the initial host-project idea.
+    source: null
     parent: null
-    next_action: Define performance metrics, harden edge cases, and decide which semantic warnings should become strict gates.
+    next_action: Add source idea or implementation plan.

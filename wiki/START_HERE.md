@@ -5,43 +5,46 @@ long source documents or host-project results.
 
 ## Project Status
 
-This project is the `agent-wiki` memory subsystem itself. The current focus is
-improving performance and reliability through more auditable handoffs, safer
-curator wakeups, and deterministic semantic guardrails for lower-cost models.
+This `agent-wiki/` directory is a reusable memory subsystem. It starts in a
+clean scaffold state: no host-project claims, active plans, experiments, or
+literature have been promoted yet.
 
-The accepted source plan is distilled in `agent-wiki/wiki/plans/active_plan.md`.
-The first implementation pass for Git-aware scans, event wakeups, queue helpers,
-and semantic lint warnings is in place. Treat strict hard-error gates, tmux
-prompt injection, and a curator auditor as unresolved unless later evidence
-promotes them.
-
-Current project truth lives in:
+Current starter truth lives in:
 
 - `agent-wiki/wiki/CURRENT_STATE.md`
 - `agent-wiki/wiki/topics/project_overview.md`
-- `agent-wiki/wiki/topics/method.md`
 - `agent-wiki/wiki/plans/active_plan.md`
 - `agent-wiki/knowledge/project_graph.yaml`
 
-## OpenCode
+## Harnesses
 
 OpenCode should normally be launched from the host project root. The active
-root `opencode.json` should come from
+root `opencode.json` can come from
 `agent-wiki/templates/project-root/opencode.json` and point to the bundled
 `wiki-curator` agent.
 
-The template also configures the built-in `build` agent as a host implementer
-with `/contextualize` context refresh and agent-wiki host-agent memory rules by
-default.
+Codex should also start from the host project root and use `AGENTS.md` plus the
+Python helper scripts directly.
 
-Useful commands:
+Useful OpenCode commands:
 
 - `/contextualize`
 - `/context-curator`
 - `/wiki-scan`
+- `/wiki-review-next`
+- `/wiki-watch`
 - `/wiki-lint`
 - `/wiki-map`
 - `/wiki-rollover`
+
+Useful shell commands:
+
+```bash
+python agent-wiki/scripts/wiki/contextualize.py --role implementer --project-root . --max-lines 180
+python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown --evidence <path-or-note>
+python agent-wiki/scripts/wiki/lint.py
+```
 
 ## Read Order
 
