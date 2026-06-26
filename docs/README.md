@@ -19,6 +19,7 @@ Primary pages:
 - `installation.md`
 - `getting-started.md`
 - `opencode-workflow.md`
+- `codex-workflow.md`
 - `memory-design.md`
 - `host-agent-rules.md`
 - `prompting-guide.md`

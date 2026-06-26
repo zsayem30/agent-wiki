@@ -1,8 +1,9 @@
 # agent-wiki
 
 `agent-wiki` is a curator-owned project memory scaffold for research coding
-projects. It is designed to live as a subfolder inside a host project, while
-the host project's `opencode.json` remains at the project root.
+projects. It is designed to live as a subfolder inside a host project. OpenCode
+can use the bundled root `opencode.json` template; Codex and other agents can
+use the same memory protocol through `AGENTS.md` plus the Python helper scripts.
 
 Recommended host layout:
 
@@ -101,6 +102,33 @@ Use native commands:
 Host projects can define additional implementer, deep-research, reporter, or
 domain-specific agents in the root `opencode.json`. Optional example prompts
 are available in `agent-wiki/templates/optional-agents/`.
+
+## Codex Workflow
+
+Start Codex from the host project root, not from inside `agent-wiki/`, so it can
+see host code and the memory subsystem together. Codex should follow the host
+`AGENTS.md`, then `agent-wiki/AGENTS.md`, then the compact startup route:
+
+```bash
+python agent-wiki/scripts/wiki/contextualize.py --role implementer --project-root . --max-lines 180
+```
+
+For curator work:
+
+```bash
+python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
+```
+
+Codex does not need OpenCode slash commands. Use the equivalent scripts:
+
+```bash
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown --evidence <path-or-note>
+python agent-wiki/scripts/wiki/handoff_queue.py --project-root . next
+python agent-wiki/scripts/wiki/lint.py
+```
+
+See `agent-wiki/.codex/README.md`, `agent-wiki/docs/codex-workflow.md`, and
+`agent-wiki/USER_PROMPT_GUIDE.md` for ready-to-use Codex prompts.
 
 ## Host Agent Memory Rules
 

@@ -1,7 +1,7 @@
 # User Prompt Guide
 
-This guide explains how to use `agent-wiki/` as a subfolder in an OpenCode
-research project without creating documentation sprawl.
+This guide explains how to use `agent-wiki/` as a subfolder in an OpenCode or
+Codex research project without creating documentation sprawl.
 
 The short rule:
 
@@ -23,6 +23,18 @@ opencode
 ```
 
 If `opencode.json` or `AGENTS.md` already exists, merge the template sections.
+
+For Codex-only projects, `opencode.json` is optional. Keep or merge the root
+`AGENTS.md` instructions so Codex starts from the host root and follows the
+agent-wiki startup route.
+
+```bash
+git clone https://github.com/zsayem30/agent-wiki agent-wiki
+cp agent-wiki/templates/project-root/AGENTS.md ./AGENTS.md
+```
+
+If the host already has `AGENTS.md`, merge the startup and handoff sections
+instead of overwriting it.
 
 ## Inject Memory Rules Into Host Agents
 
@@ -67,6 +79,18 @@ startup files, and tell me what source material is needed before project memory
 can be initialized. Do not bulk-read the host repo.
 ```
 
+Codex equivalent:
+
+```text
+You are the wiki-curator. Follow the host AGENTS.md if present, then
+agent-wiki/AGENTS.md. Run:
+
+python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
+
+Inspect only routed startup files and tell me what source material is needed
+before project memory can be initialized. Do not bulk-read the host repo.
+```
+
 ## Add Starting Material
 
 Put user material in:
@@ -95,6 +119,22 @@ Please leave an agent-wiki curator handoff. Run /wiki-scan or
 python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown
 --evidence <path-or-note> and summarize what changed, where evidence lives,
 what verification ran, and whether current truth may need updating.
+```
+
+For Codex, use the same protocol with explicit shell commands instead of
+OpenCode slash commands:
+
+```text
+You are a host-project implementer using agent-wiki for memory. Run:
+
+python agent-wiki/scripts/wiki/contextualize.py --role implementer --project-root . --max-lines 180
+
+Choose the smallest route from agent-wiki/wiki/ROUTING_TABLE.md before opening
+long sources. After durable work, run:
+
+python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown --evidence <path-or-note>
+
+Include verification, suggested routes, and open questions when useful.
 ```
 
 Then ask the curator:
@@ -174,6 +214,8 @@ From OpenCode:
 From the host shell:
 
 ```bash
+python agent-wiki/scripts/wiki/contextualize.py --role implementer --project-root . --max-lines 180
+python agent-wiki/scripts/wiki/contextualize.py --role wiki-curator --project-root .
 python agent-wiki/scripts/wiki/scan_changes.py --project-root . --truth-impact unknown --evidence <path-or-note>
 python agent-wiki/scripts/wiki/handoff_queue.py --project-root . next
 python agent-wiki/scripts/wiki/watch_handoffs.py --project-root . --once
